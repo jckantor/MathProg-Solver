@@ -1,3 +1,0 @@
-glpnet02.lo glpnet02.o: glpnet02.c glpnet.h
-
-glpnet.h:

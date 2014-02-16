@@ -1,3 +1,0 @@
-glprlx.lo glprlx.o: glprlx.c glprlx.h
-
-glprlx.h:
