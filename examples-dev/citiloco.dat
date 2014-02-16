@@ -1,0 +1,23 @@
+
+data;
+
+param maxcost := 40;
+
+param : PLACES :                    price	open	close	time	lat			lng			type	rating :=
+'Fiddlers Hearth'                   16.00	11.00	23.00	89.00	41.67733	-86.25218	dining	4
+'The Vine'                          25.00	11.00	21.00	89.00	41.67774	-86.25143	dining	3.5
+'Siam Thai Restaurant'              14.00	17.00	21.00	89.00	41.67822	-86.25222	dining 	2.5
+'Cambodian Thai'                    8.00	11.50	21.00	89.00	41.67464	-86.25033	dining 	1.5
+'Trios Restaurant and Jazz Club'	25.00	17.00	23.00	89.00	41.67743	-86.25059	dining 	4.0
+'Cafe Navarre'                     18.00	17.00	22.00	89.00	41.67671	-86.25044	dining	3.2
+'Madison Oyster Bar'               10.00	11.00	27.00	89.00	41.67743	-86.25219	bar		3.3
+'Main Street Coffee House'          7.00	6.50	22.00	45.00	41.67654	-86.25182	coffee	3.4
+'Notre Dame Campus'                  0.00	0.00	24.00	90.00	41.69954	-86.23826	attraction	2.3
+'Studebaker National Museum'         8.00	10.00	17.00	40.00	41.67459	-86.26185	attraction	3.4
+'South Bend Museum of Art'           0.00	9.50	19.00	35.00	41.66961	-86.24989	attraction	2.3
+'Snite Museum of Art'                0.00	1.00	17.00	35.00	41.69959	-86.23273	attraction	4.5
+'Healthworks Kids Museum'            6.00	9.00	16.00	60.00	41.67513	-86.25174	attraction	2.3
+'South Bend Chocolate Company Tour'  4.00	9.00	16.00	45.00	41.66470	-86.29472	attraction	4.0
+;
+
+end;

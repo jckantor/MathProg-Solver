@@ -1,0 +1,72 @@
+<h3>Processing Turkeys</h3>
+<p>
+    I am having problems figuring out how to model the following problem related
+    to cutting up turkeys in a processing plant:
+</p>
+<p>
+    We have two flocks of turkeys to process of different bird types. 
+</p>
+<ul>
+    <li>F1 = number of birds in flock 1 of bird type 1</li>
+    <li>F2 = number of birds in flock 2 of bird type 2</li>
+</ul>
+<p>
+    We have 4 possible cut up processes some of which can only process birds from
+    flock 1 (bird type 1) and some from flock 2 (bird type2) and some from either.
+    Here are a list of the processes and the birds they can process:
+</p>
+<ul>
+    <li>P1 (process 1) for F1 only</li>
+    <li>P2 (process 2) for F1 only</li>
+    <li>P3 (process 3) for F1 or F2</li>
+    <li>P4 (process 4) for F2 only</li>
+</ul>
+<p>
+    The processes create one or more raw meats from the birds:
+</p>
+<ul>
+    <li>RM1 is raw meat 1</li>
+    <li>RM2 is raw meat 2</li>
+    <li>RM3 is raw meat 3</li>
+    <li>RM4 is raw meat 4</li>
+</ul>
+<p>
+    Here are the raw meats created from each of the process:
+</p>
+<ul>
+    <li>P1: x1 of RM1, x2 of RM2</li>
+    <li>P2: x3 of RM2, x4 of RM3, x5 of RM4</li>
+    <li>P3: x6 of RM1, x7 of RM4</li>
+    <li>P4: x8 of RM1, x9 of RM2, x10 of RM4, x11 of RM5</li>
+</ul>
+<p>
+    (where xn = the process yield per bird, so for example, x1*(#birds processed
+    by P1) = amount of RM1 created by process P1) 
+</p>
+<p>
+    We have sales requirements for the raw meats as follows:
+</p>
+<ul>
+    <li>S1 of RM1</li>
+    <li>S2 of RM2</li>
+    <li>S3 of RM3</li>
+    <li>S4 of RM4</li>
+</ul>
+<p>
+    We want the optimum processing plan to achieve the raw meats requirements 
+    from the two flocks. By optimum I mean the plan that uses the least number
+    of birds and achieves or comes closest to achieving the sales requirements.
+</p>
+<p>
+    In my previous project we were developing a grow out plan determining the
+    number of birds required to meet the sales requirements. lp_solve worked 
+    great for that problem. Now we want to do the reverse and find the best 
+    processing plan given a constraint on the actual number and type of birds 
+    available from the actual grow out.
+</p>
+<p>
+    I do not know how to model this for lp_solve. Any help is greatly appreciated.
+    I hope I have stated the problem correctly. If not please let me know and I 
+    will try again.
+</p>
+

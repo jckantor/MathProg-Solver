@@ -1,0 +1,64 @@
+
+table {
+	font-family: monospace;
+	font-size: 10pt;
+}
+
+table, th,td {
+	font-family: monospace;
+	font-size: 10pt;
+}
+td {
+	width: auto;
+	min-width: 200px;
+}
+td+td {
+	min-width: 50px;
+	width: auto;
+}
+
+.mathprog, .exercise {
+	visibility: hidden;
+	display: none;
+}
+
+#container {
+	margin: auto;
+	max-width: auto;
+}
+
+#content{
+	clear: left;
+	width: auto;
+	padding-top: 0px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+/*
+
+#header {
+}
+#header h1 {
+	margin: 12px;
+}
+#content {
+	clear: left;
+	padding-top: 10px;
+}
+#editor { 
+	font-family: monospace;
+	font-size: 10pt;
+	padding: 10px;
+	position: relative;
+	height: 300px;
+	width: 96%;
+}
+#content h2, h3 {
+	margin: 0.2em 0.2em 0.2em 0em;
+}
+*/
+#footer {
+	text-align: right;
+	padding: 20px;
+}

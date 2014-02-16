@@ -1,0 +1,101 @@
+<schedule>
+<option>
+    <location>
+        <name>Notre Dame Campus</name>
+        <price>  0.00</price>
+        <time> 90.00</time>
+        <lat>41.699540</lat>
+        <lng>-86.238260</lng>
+    </location>
+    <startTime>  9.00</startTime>
+    <endTime> 10.50</endTime>
+</option>
+<option>
+    <location>
+        <name>Healthworks Kids Museum</name>
+        <price>  6.00</price>
+        <time> 60.00</time>
+        <lat>41.675130</lat>
+        <lng>-86.251740</lng>
+    </location>
+    <startTime> 10.76</startTime>
+    <endTime> 11.76</endTime>
+</option>
+<option>
+    <location>
+        <name>South Bend Museum of Art</name>
+        <price>  0.00</price>
+        <time> 35.00</time>
+        <lat>41.669610</lat>
+        <lng>-86.249890</lng>
+    </location>
+    <startTime> 11.89</startTime>
+    <endTime> 12.48</endTime>
+</option>
+<option>
+    <location>
+        <name>Studebaker National Museum</name>
+        <price>  8.00</price>
+        <time> 40.00</time>
+        <lat>41.674590</lat>
+        <lng>-86.261850</lng>
+    </location>
+    <startTime> 12.70</startTime>
+    <endTime> 13.37</endTime>
+</option>
+<option>
+    <location>
+        <name>Main Street Coffee House</name>
+        <price>  7.00</price>
+        <time> 45.00</time>
+        <lat>41.676540</lat>
+        <lng>-86.251820</lng>
+    </location>
+    <startTime> 13.54</startTime>
+    <endTime> 14.29</endTime>
+</option>
+<option>
+    <location>
+        <name>South Bend Chocolate Company Tour</name>
+        <price>  4.00</price>
+        <time> 45.00</time>
+        <lat>41.664700</lat>
+        <lng>-86.294720</lng>
+    </location>
+    <startTime> 14.57</startTime>
+    <endTime> 15.32</endTime>
+</option>
+<option>
+    <location>
+        <name>Snite Museum of Art</name>
+        <price>  0.00</price>
+        <time> 35.00</time>
+        <lat>41.699590</lat>
+        <lng>-86.232730</lng>
+    </location>
+    <startTime> 15.66</startTime>
+    <endTime> 16.24</endTime>
+</option>
+<option>
+    <location>
+        <name>Cafe Navarre</name>
+        <price> 18.00</price>
+        <time> 89.00</time>
+        <lat>41.676710</lat>
+        <lng>-86.250440</lng>
+    </location>
+    <startTime> 17.00</startTime>
+    <endTime> 18.48</endTime>
+</option>
+<option>
+    <location>
+        <name>Fiddlers Hearth</name>
+        <price> 16.00</price>
+        <time> 89.00</time>
+        <lat>41.677330</lat>
+        <lng>-86.252180</lng>
+    </location>
+    <startTime> 18.52</startTime>
+    <endTime> 20.00</endTime>
+</option>
+</schedule>
