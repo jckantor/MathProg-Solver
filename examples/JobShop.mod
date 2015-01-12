@@ -16,17 +16,17 @@ var start{TASKS} >= 0;
 var makespan >= 0;
 
 /* BigM is set to be bigger than largest possible makespan */
-param BigM := 1 + sum {(i,m) in TASKS} dur[i,m];
+param BigM := 1 + sum {(j,m) in TASKS} dur[j,m];
 
 /* The primary objective is to minimize makespan, with a secondary
 objective of starting tasks as early as possible */
-minimize OBJ: BigM*makespan + sum{(i,m) in TASKS} start[i,m];
+minimize OBJ: BigM*makespan + sum{(j,m) in TASKS} start[j,m];
 
 /* By definition, all jobs must be completed within the makespan */
 s.t. A {(j,m) in TASKS}: start[j,m] + dur[j,m] <= makespan;
 
 /* Must satisfy any orderings that were given for the tasks. */
-s.t. B {(i,m,j,n) in TASKORDER}: start[i,m] + dur[i,m] <= start[j,n];
+s.t. B {(k,n,j,m) in TASKORDER}: start[k,n] + dur[k,n] <= start[j,m];
 
 /* Eliminate conflicts if tasks are require the same machine */
 /* y[i,m,j] = 1 if Job i is scheduled before job j on machine m*/
@@ -78,8 +78,8 @@ data;
 /* Job shop data from Christelle Gueret, Christian Prins,  Marc Sevaux,
 "Applications of Optimization with Xpress-MP," Chapter 5, Dash Optimization, 2000. */
 
-/* Jobs are broken down into a list of tasks, each task described by
-job name, machine name, and duration */
+/* Jobs are broken down into a list of tasks (j,m), each task described by
+job name j, machine name m, and duration dur[j,m] */
 
 param: TASKS: dur :=
    Paper_1  Blue    45
@@ -91,7 +91,7 @@ param: TASKS: dur :=
    Paper_3  Green   17
    Paper_3  Yellow  28 ;
 
-/* List any required pairwise orderings of tasks */
+/* List task orderings (k,n,j,m) where task (k,n) must proceed task (j,n) */
 
 set TASKORDER :=
    Paper_1 Blue    Paper_1 Yellow
