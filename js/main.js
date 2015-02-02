@@ -66,6 +66,14 @@ var modelEditor = CodeMirror.fromTextArea(document.getElementById("editor"), {
 });
 modelEditor.markClean();
 
+// make modelEditor CodeMirror instance resizable
+$(modelEditor.getWrapperElement()).resizable({
+  resize: function() {
+    modelEditor.setSize($(this).width(), $(this).height());
+    modelEditor.refresh()
+  }
+});
+
 // other initializations
 
 google.load('visualization', '1.0', { packages:['controls'] });
