@@ -5,7 +5,7 @@
 // for IE8 compatability with trim() per http://stackoverflow.com/questions/2308134/
 if(typeof String.prototype.trim !== 'function') {
   String.prototype.trim = function() {
-    return this.replace(/^\s+|\s+$/g, ''); 
+    return this.replace(/^\s+|\s+$/g, '');
   }
 }
 
@@ -65,6 +65,14 @@ var modelEditor = CodeMirror.fromTextArea(document.getElementById("editor"), {
     mode: 'mathprog'
 });
 modelEditor.markClean();
+
+// make modelEditor CodeMirror instance resizable
+$(modelEditor.getWrapperElement()).resizable({
+  resize: function() {
+    modelEditor.setSize($(this).width(), $(this).height());
+    modelEditor.refresh()
+  }
+});
 
 // other initializations
 
@@ -170,7 +178,7 @@ function writeVariableTable() {
         soln = isMIP()?glp_mip_col_val(lp,i):glp_get_col_prim(lp,i);
         variableData.addRow([
             glp_get_col_name(lp,i),
-            glpColKind[glp_get_col_kind(lp,i)], 
+            glpColKind[glp_get_col_kind(lp,i)],
             glpColStatus[glp_get_col_stat(lp,i)],
             { v: glp_get_col_lb(lp,i), f: formatNumber(glp_get_col_lb(lp,i)) },
             { v: glp_get_col_ub(lp,i), f: formatNumber(glp_get_col_ub(lp,i)) },
@@ -326,7 +334,7 @@ $('.dashboardCell').css('text-align','right');
 
 function getURLParameter(name) {
     return decodeURIComponent(
-            (new RegExp('[?|&]' + name + '=' + 
+            (new RegExp('[?|&]' + name + '=' +
                 '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
 }
 
@@ -341,7 +349,7 @@ $('#menuHome').click(function () {
     $('#solveMIP').click();
 })
 
-// menu item About... 
+// menu item About...
 $('#menuAbout').click(function () {
     $('#modalAbout').modal({show:true});
 })
@@ -362,12 +370,12 @@ function clearAll() {
 function clearOutput() {
     clearMessage();
     clearDashboard();
-    $('#variableFilterDiv').html('');  
+    $('#variableFilterDiv').html('');
     $('#variableTableDiv').html('');
-    $('#constraintFilterDiv').html(''); 
+    $('#constraintFilterDiv').html('');
     $('#constraintTableDiv').html('');
     $('#outputTab').html('');
-    $('#logContent').text(''); 
+    $('#logContent').text('');
 }
 
 function clearData() {
@@ -500,7 +508,7 @@ function tablecb_chart(arg,mode,data) {
             throw new Error('Table GCHART is for OUT mode only.');
 
         case 'W':
-            // display with Google Chart Tools. 
+            // display with Google Chart Tools.
             //    arg[1]  "GCHART"
             //    arg[2]   Header
             //    arg[3]   chartType (optional; default is a Table)
@@ -532,7 +540,7 @@ function tablecb_chart(arg,mode,data) {
                         for (var i=0; i < tableData.getNumberOfRows(); i++) {
                             tableData.setFormattedValue(i,j,formatNumber(tableData.getValue(i,j)));
                         }
-                     }	            
+                     }
                  }
                  var chart = new google.visualization.ChartWrapper({
                     chartType: chartType,
@@ -543,15 +551,15 @@ function tablecb_chart(arg,mode,data) {
                 chart.draw();
             }
             return null;
-         
-        default : 
+
+        default :
             throw new Error('Unrecognized table mode ' + mode);
     }
 }
 
 function tablecb_json(arg,mode,data) {
     switch(mode) {
-        case 'R': 
+        case 'R':
          if (!fileId[arg[2]]) {
              throw new MathProgError('JSON file ' + arg[2] + ' not loaded',arg);
          } else {
@@ -573,7 +581,7 @@ function tablecb_json(arg,mode,data) {
          }
 
         case 'W':
-            // display with Google Chart Tools. 
+            // display with Google Chart Tools.
             //    arg[1]  "JSON"
             //    arg[2]   Header
             //    arg[3]   chartType (optional; default is a Table)
@@ -594,7 +602,7 @@ function tablecb_json(arg,mode,data) {
                         for (var i=0; i < tableData.getNumberOfRows(); i++) {
                             tableData.setFormattedValue(i,j,formatNumber(tableData.getValue(i,j)));
                         }
-                     }	            
+                     }
                  }
                  var chart = new google.visualization.ChartWrapper({
                     chartType: chartType,
@@ -608,8 +616,8 @@ function tablecb_json(arg,mode,data) {
                 chart.draw();
             }
             return null;
-         
-        default : 
+
+        default :
             throw new MathProgError('Unrecognized table mode ' + mode);
     }
 }
@@ -627,7 +635,7 @@ function tablecb_csv(arg,mode,data) {
             }
 
         case 'W':
-            // write to a new div element 
+            // write to a new div element
             document.getElementById('outputTab').appendChild(document.createElement('div'));
             var div = document.getElementById('outputTab').lastChild;
             $(div).html('<a><h4>' + arg[2] + '</h4></a>');

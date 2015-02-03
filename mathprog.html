@@ -3,17 +3,6 @@
 <head>
     <meta http-equiv='Content-Type' content='text/html' charset='UTF-8' />
     <title>MathProg</title>
-    <script type="text/javascript">
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-37345659-1']);
-        _gaq.push(['_trackPageview']);
-        (function() {
-            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-    </script>
-
     <style>
         table, th,td { font-size: 13px;}
         td { width: auto; min-width: 200px;}
@@ -28,22 +17,24 @@
         #log { font-family: "Courier New", monospace; font-size: 14px; width: 750px; }
     </style>
 
-    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.css">
 
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/2.2.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/2.2.2/js/bootstrap.min.js"></script>
     <style>
         pre {
             font-family: Consolas, Monoco, "Courier New"; font-size: 14px;
         }
     </style>
 
-    <script src="js/codemirror.js"></script>
-    <link rel="stylesheet" href="css/codemirror.css">
-    <script src="js/models/mathprog.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/codemirror.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/codemirror.css">
+    <script src="js/codemirror_mathprog.js"></script>
     <style>
         .CodeMirror {
-            font-size: 14px; 
+            font-size: 14px;
             font-family: Consolas, Monaco,"Courier New", monospace;
             line-height: 1.45em;
             width: 750px;
@@ -52,7 +43,7 @@
         }
     </style>
 
-    <script src="./Mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
     <script src="//api.filepicker.io/v1/filepicker.js"></script>
     <script src="https://www.google.com/jsapi"></script>
     <script src='js/glpk.min.js'></script>
@@ -73,7 +64,7 @@
 </head>
 
 <body>
-    
+
     <!-- modal About... -->
 
     <div id="modalAbout" class="modal hide fade" tabindex="-1" role="dialog">
@@ -83,18 +74,18 @@
         </div>
         <div class="modal-body">
             <p>
-                <b>Mathematical Programming in GNU MathProg</b> is a web application supporting 
+                <b>Mathematical Programming in GNU MathProg</b> is a web application supporting
                 linear and discrete optimization. GNU MathProg is the modeling language
                 of the open source <a href = 'http://www.gnu.org/software/glpk/'>GNU GLPK</a>
                 project with a syntax similar to <a href = "http://www.ampl.com/">AMPL</a>.
-                The calculations are performed in the client's browser using the 
+                The calculations are performed in the client's browser using the
                 <a href='http://hgourvest.github.com/glpk.js/'>glpk.js</a>
                 solver</a> developed by Henri Gourvest. The web application was developed
                 by Jeffrey Kantor with significant assistance from Henri Gourvest.
             </p>
             <p>
                 This web application requires a modern browser implementing a fast javascript
-                engine and features of HTML 5. Recent versions of Chrome, Safari, Internet 
+                engine and features of HTML 5. Recent versions of Chrome, Safari, Internet
                 Explorer, and Firefox will work. The application uses code from a number of
                 open source projects including
             </p>
@@ -177,12 +168,12 @@
                                         <ul class="dropdown-menu">
                                             <li><a href='#' onclick="loadEx('HelloWorld.html','HelloWorld.mod')">Hello, World</a></li>
 	                                        <li><a href='#' onclick="loadEx('lpTwoVars.html','lpTwoVars.mod')">Linear Program in Two Variables</a></li>
-	                                        <li><a href='#' onclick="loadEx('linearEqns.html','linearEqns.mod')">Linear Equations</a></li>   
+	                                        <li><a href='#' onclick="loadEx('linearEqns.html','linearEqns.mod')">Linear Equations</a></li>
                                             <li><a href='#' onclick="loadEx('Sets.html','Sets.mod')">Sets</a></li>
                                             <li><a href='#' onclick="loadEx('Parameters.html','Parameters.mod')">Parameters </a></li>
                                        <!--     <li><a href='#' onclick="loadEx('Tuples.html','Tuples.mod')">Tuples</a></li> -->
                                         </ul>
-                                    </li> 
+                                    </li>
                                     <li class="dropdown-submenu">
                                         <a href="#">Tables and Charts</a>
                                         <ul class="dropdown-menu">
@@ -215,7 +206,7 @@
                                         <ul class="dropdown-menu">
                                             <li><a href='#' onclick="loadEx('TransportNet.html','TransportNet.mod')">Transportation Network</a></li>
                                             <li><a href='#' onclick="loadEx('StockCutting.html','StockCutting.mod')">Stock Cutting</a></li>
-                                            <li><a href='#' onclick="loadEx('TableSeating.html','TableSeating.mod')">Table Seating</a></li>    
+                                            <li><a href='#' onclick="loadEx('TableSeating.html','TableSeating.mod')">Table Seating</a></li>
                                             <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/assign.mod')">GLPK/assign.mod</a></li>
                                             <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/fctp.mod')">GLPK/fctp.mod</a></li>
                                             <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/gap.mod')">GLPK/gap.mod</a></li>
@@ -226,9 +217,9 @@
                                     <li class="dropdown-submenu">
                                         <a href = '#'>Route Optimization</a>
                                         <ul class="dropdown-menu">
-                                            <li><a href='#' onclick="loadEx('tsptw.html','tsptw.mod')">Traveling Salesman with Time Windows</a></li>   
-                                            <li><a href='#' onclick="loadEx('vrp.html','vrp.mod')">Vehicle Routing</a></li> 
-                                            <li><a href='#' onclick="loadEx('vrptw.html','vrptw.mod')">Vehicle Routing with Time Windows</a></li> 
+                                            <li><a href='#' onclick="loadEx('tsptw.html','tsptw.mod')">Traveling Salesman with Time Windows</a></li>
+                                            <li><a href='#' onclick="loadEx('vrp.html','vrp.mod')">Vehicle Routing</a></li>
+                                            <li><a href='#' onclick="loadEx('vrptw.html','vrptw.mod')">Vehicle Routing with Time Windows</a></li>
                                             <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/tsp.mod')">GLPK/tsp.mod</a></li>
                                         </ul>
                                     </li>
@@ -251,7 +242,7 @@
                                     <li class="dropdown-submenu">
                                         <a href = '#'>Finance</a>
                                         <ul class="dropdown-menu">
-	                                        <li><a href='#' onclick="loadEx('retirement.html','retirement.mod')">Saving for Retirement</a></li>  
+	                                        <li><a href='#' onclick="loadEx('retirement.html','retirement.mod')">Saving for Retirement</a></li>
                                             <li><a href='#' onclick="loadEx('PortfolioMAD.html','PortfolioMAD.mod')">Portfolio Optimization (MAD)</a></li>
                                             <li><a href='#' onclick="loadEx('_blank.html','AmericanCall.mod')">American Call Option</a></li>
                                             <li><a href='#' onclick="loadEx('_blank.html','AmericanPut.mod')">American Put Option</a></li>
@@ -330,7 +321,7 @@
                                             <li><a rel="external" href = 'http://www.ibm.com/developerworks/linux/library/l-glpk2/'>GLPK, Part 2</a></li>
                                             <li><a rel="external" href = 'http://www.ibm.com/developerworks/linux/library/l-glpk3/'>GLPK, Part 3</a></li>
                                         </ul>
-                                    </li> 
+                                    </li>
                                     <li><a rel="external" href = 'http://www.ampl.com/BOOK/download.html'>AMPL Book</a></li>
                                     <li><a rel="external" href = 'http://MathP.org'>MathP.org</a></li>
                                 </ul>
@@ -388,7 +379,7 @@
 
                 </div>
 
-                <!-- LP and LP+MIP Radio Buttons --> 
+                <!-- LP and LP+MIP Radio Buttons -->
                 <div class="btn-group" data-toggle="buttons-radio" style='float: right;'>
                     <button id='btnSolveLP' type="button" class="btn" style="display:none">LP</button>
                     <button id='btnSolveMIP' type="button" class="btn" style="display:none">MIP</button>
@@ -441,7 +432,7 @@
                     </div>
                     <!-- Variables Pane -->
                     <div class="tab-pane" id="variableTab" style="min-height: 380px; width: 750px;">
-                        <div id="variableFilterDiv"></div>  
+                        <div id="variableFilterDiv"></div>
                         <div id="variableTableDiv" style="width: 750px;"></div>
                     </div>
                     <!-- Constraints Pane -->
