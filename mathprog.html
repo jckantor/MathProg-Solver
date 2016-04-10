@@ -4,69 +4,67 @@
     <meta http-equiv='Content-Type' content='text/html' charset='UTF-8' />
     <title>MathProg</title>
     <style>
+	      html, body {
+	          width: 100%;
+	          height: 100%;
+	          overflow: hidden;
+	      }
+	      #container {
+	          position: absolute;
+	          top: 0;
+	          bottom: 0;
+	          left: 0;
+	          right: 0;
+            overflow: scroll;
+        }
         table, th,td { font-size: 13px;}
         td { width: auto; min-width: 200px;}
         td+td { min-width: 50px; width: auto; }
         .mathprog, .exercise { visibility: hidden; display: none; }
         #container { margin: auto; }
-        #instructionContent {width: 750px;}
+        #instructionContent {width: 100%;}
         #linkTextArea {height: 80px; width: 490px;}
-        #content{ clear: left; width: 750; padding-top: 0px; padding-left: 20px; padding-right: 20px; }
+        #content{ clear: left; width: 750; padding-top: 0px; padding-left: 15px; padding-right: 15px; }
         #footer { float: left; padding-left: 20px;}
-        #output { font-family: "Courier New", monospace; font-size: 14px; width: 750px; }
-        #log { font-family: "Courier New", monospace; font-size: 14px; width: 750px; }
+        #output { font-family: Consolas, Monaco, "Courier New", monospace; font-size: 13px; width: 100%; }
+        #log { font-family: Consolas, Monaco, "Courier New", monospace; font-size: 13px; width: 100%; }
     </style>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.css">
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/2.2.2/css/bootstrap.min.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/2.2.2/js/bootstrap.min.js"></script>
+    <script src="lib/jquery-2.2.3.min.js"></script>
+    <script src="lib/jquery-ui.js"></script>
+    <link rel="stylesheet" href="lib/jquery-ui.css">
+    <script src="lib/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="lib/bootstrap.min.css">
     <style>
         pre {
-            font-family: Consolas, Monoco, "Courier New"; font-size: 14px;
+            font-family: Consolas, Monoco, "Courier New"; 
+            font-size: 13px;
+			      line-height: 1.45em;
         }
     </style>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/codemirror.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/4.12.0/codemirror.css">
-    <script src="js/codemirror_mathprog.js"></script>
+    <script src="lib/codemirror.js"></script>
+    <link rel="stylesheet" href="lib/codemirror.css">
+    <script src="css/codemirror_mathprog.js"></script>
     <style>
         .CodeMirror {
-            font-size: 14px;
+            font-size: 13px;
             font-family: Consolas, Monaco,"Courier New", monospace;
             line-height: 1.45em;
-            width: 750px;
+            width: 100%;
             margin: 0px;
             border: solid 1px;
         }
     </style>
-
-    <script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
-    <script src="//api.filepicker.io/v1/filepicker.js"></script>
-    <script src="https://www.google.com/jsapi"></script>
-    <script src='js/glpk.min.js'></script>
-
-    <script>
-        $(document).ready(function () {
-            var model = getURLParameter('model');
-            if (model) {
-                modelEditor.setValue(model);
-                modelEditor.markClean();
-                $('#modelFileName').html('untitled.mod');
-                clearOutput();
-            } else {
-                $('#menuHome').click();
-            }
-        });
-    </script>
+    <link rel="stylesheet" href="lib/KaTeX/0.5.1/katex.min.css">
+    <script src="lib/KaTeX/0.5.1/katex.min.js"></script>
+    <script src="lib/KaTeX/0.5.1/auto-render.min.js"></script>
+    <script src="lib/filepicker.js"></script>
+    <script src="lib/jsapi.js"></script>
+    <script src='lib/glpk.min.js'></script>
 </head>
 
 <body>
 
     <!-- modal About... -->
-
     <div id="modalAbout" class="modal hide fade" tabindex="-1" role="dialog">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -74,32 +72,21 @@
         </div>
         <div class="modal-body">
             <p>
-                <b>Mathematical Programming in GNU MathProg</b> is a web application supporting
-                linear and discrete optimization. GNU MathProg is the modeling language
-                of the open source <a href = 'http://www.gnu.org/software/glpk/'>GNU GLPK</a>
-                project with a syntax similar to <a href = "http://www.ampl.com/">AMPL</a>.
-                The calculations are performed in the client's browser using the
-                <a href='http://hgourvest.github.com/glpk.js/'>glpk.js</a>
-                solver</a> developed by Henri Gourvest. The web application was developed
-                by Jeffrey Kantor with significant assistance from Henri Gourvest.
+                <b>MathProg</b> is a Chrome application for linear and discrete optimization
+	              in GNU MathProg, the modeling language of the open source GLPK project.
+                The syntax is similar to <a href = "http://www.ampl.com/" target = '_blank'>AMPL</a>.
+                Calculations are performed using the glpk.js solver.
             </p>
             <p>
-                This web application requires a modern browser implementing a fast javascript
-                engine and features of HTML 5. Recent versions of Chrome, Safari, Internet
-                Explorer, and Firefox will work. The application uses code from a number of
-                open source projects including
+                The application uses code from a number of open source projects including
             </p>
             <ul>
-                <li> <a href = 'http://www.gnu.org/software/glpk/'>GNU GLPK project</a></li>
-                <li> <a href = 'http://hgourvest.github.com/glpk.js/'>glpk.js</a></li>
-                <li> <a href = 'http://jquery.com/'>jQuery</a></li>
-                <li> <a href = 'http://twitter.github.com/bootstrap/'>Bootstrap</a></li>
-                <li> <a href = 'http://www.mathjax.org/'>MathJax</a></li>
+                <li> <a href = 'http://www.gnu.org/software/glpk/' target = '_blank'>GNU GLPK project</a></li>
+                <li> <a href = 'http://hgourvest.github.com/glpk.js/' target = '_blank'>glpk.js</a></li>
+                <li> <a href = 'http://jquery.com/' target = '_blank'>jQuery</a></li>
+                <li> <a href = 'http://twitter.github.com/bootstrap/' target = '_blank'>Bootstrap</a></li>
+                <li> <a href = 'http://www.mathjax.org/' target = '_blank'>MathJax</a></li>
             </ul>
-            <p>
-                You are welcome to use this project though it is still in development. Additional
-                features will be added and you may see change in existing features.
-            </p>
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -107,7 +94,6 @@
     </div>
 
     <!-- modal Confirm Clear All -->
-
     <div id="modalConfirmClearAll" class="modal hide" tabindex="-1" role="dialog">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -124,259 +110,215 @@
         </div>
     </div>
 
-    <!-- modal Link... -->
-
-    <div id="modalCreateLink" class="modal hide" tabindex="-1" role="dialog">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h3>Create Link...</h3>
-        </div>
-        <div class="modal-body">
-            <textarea id='linkTextArea' onclick="this.focus();this.select()" readonly="readonly"></textarea>
-            <p>
-                Copy and paste this link into email, web page, or other web document. This link consists
-                of <a id=linkLength></a> characters. Note that links longer than about 2,000 characters
-                may not be processed correctly by all browsers.
-            </p>
-        </div>
-        <div class="modal-footer">
-            <button class="btn" data-dismiss="modal">Dismiss</button>
-        </div>
-    </div>
-
+    <!-- container -->
     <div id='container'>
 
         <!-- Navigation Menu Bar -->
-
         <div class="navbar navbar-fixed-top navbar-inverse">
             <div class="navbar-inner" style="background:#003b7b;">
                 <div class="container" style="float:left;">
                     <div class="nav-collapse collapse">
-                    <div class="dropdown not-logged-in"> <!-- for mobile devices http://stackoverflow.com/questions/12170045/ -->
-                        <ul class="nav">
+                        <div class="dropdown not-logged-in"> <!-- for mobile devices http://stackoverflow.com/questions/12170045/ -->
+                            <ul class="nav">
 
-                            <!-- Navbar Branding Logo and Home -->
-                            <li> <a id='menuHome' href="#" class="dropdown-toggle" style="color:#ffffff;"><b>GNU MathProg</b></a></li>
+                                <!-- Navbar Branding Logo and Home -->
+                                <li> <a id='menuHome' href="#" class="dropdown-toggle" style="color:#ffffff;"><b>MathProg Solver</b></a></li>
 
-                            <!-- Examples menu -->
+                                <!-- Models menu -->
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #dddddd;">Model<b class="caret"></b></a>
+                                     <ul class="dropdown-menu">
+	                                       <li><a href="#" id="menuNew">New</a></li>
+                                        <li><a href="#" id="menuOpen">Open ...</a></li>
+                                        <li><a href="#" id="menuSave">Save</a></li>
+                                        <li><a href="#" id="menuSaveAs">Save As ...</a></li>
+                                    </ul>
+                                </li>
+                            
+                                <!-- Examples menu -->
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #dddddd;">Examples<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown-submenu">
+                                            <a href="#">MathProg Basics</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href='#' class="example" id="HelloWorld">Hello, World</a></li>
+	                                              <li><a href='#' class="example" id="lpTwoVars">Linear Program in Two Variables</a></li>
+	                                              <li><a href='#' class="example" id="linearEqns">Linear Equations</a></li>
+                                                <li><a href='#' class="example" id="Sets">Sets</a></li>
+                                                <li><a href='#' class="example" id="Parameters">Parameters</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a href="#">Tables and Charts</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href='#' class="example" id="ChartTools">Google Charts</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a href = '#'>Mixture Problems</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href='#' class="example" id="giapetto">Giapetto's Workshop</a></li>
+                                                <li><a href='#' class="example_glpk" id="plan">GLPK/plan.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="stigler">GLPK/stigler.mod</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a href = '#'>Scheduling</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href='#' class="example" id="ProjectCPM">Project Management with CPM</a></li>
+                                                <li><a href='#' class="example" id="Bottleneck">Machine Bottleneck</a></li>
+                                                <li><a href='#' class="example" id="JobShop">Job Shop Scheduling</a></li>
+                                                <li><a href='#' class="example" id="TaskOrder">Linear Ordering of Tasks</a></li>
+                                                <li><a href='#' class="example" id="JesuitVols">Jesuit Volunteers Corps</a></li>
+                                                <li><a href='#' class="example_glpk" id="cpp">GLPK/cpp.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="jssp">GLPK/jssp.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="shiftcover">GLPK/shiftcover.mod</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a href = '#'>Transportation/Assignment</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href='#' class="example" id="TransportNet">Transportation Network</a></li>
+                                                <li><a href='#' class="example" id="StockCutting">Stock Cutting</a></li>
+                                                <li><a href='#' class="example" id="TableSeating">Table Seating</a></li>
+                                                <li><a href='#' class="example_glpk" id="assign">GLPK/assign.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="fctp">GLPK/fctp.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="gap">GLPK/gap.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="train">GLPK/train.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="transp">GLPK/transp.mod</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a href = '#'>Route Optimization</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href='#' class="example" id="tsptw">Traveling Salesman with Time Windows</a></li>
+                                                <li><a href='#' class="example" id="vrp">Vehicle Routing</a></li>
+                                                <li><a href='#' class="example" id="vrptw">Vehicle Routing with Time Windows</a></li>
+                                                <li><a href='#' class="example_glpk" id="tsp">GLPK/tsp.mod</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a href = '#'>Stochastic Programming</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href='#' class="example" id="Newsvendor">Newsvendor Problem</a></li>
+                                                <li><a href='#' class="example" id="PlantExpansion">Scenario Analysis for a Plant Expansion</a></li>
+                                                <li><a href='#' class="example" id="RNGambling">Stochastic Dynamic Programming: Risk Neutral Gambler</a></li>
+                                                <li><a href='#' class="example" id="RAGambling">Stochastic Dynamic Programming: Risk Averse Gambler</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a href='#'>Engineering</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href='#' class="example" id="DataReconciliation">Data Reconciliation</a></li>
+                                                <li><a href='#' class="example" id="Solvay">Generation/Consumption Analysis</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a href = '#'>Finance</a>
+                                            <ul class="dropdown-menu">
+	                                              <li><a href='#' class="example" id="retirement">Saving for Retirement</a></li>
+                                                <li><a href='#' class="example" id="PortfolioMAD">Portfolio Optimization (MAD)</a></li>
+                                                <li><a href='#' class="example" id="AmericanCall">American Call Option</a></li>
+                                                <li><a href='#' class="example" id="AmericanPut">American Put Option</a></li>
+                                                <li><a href='#' class="example" id="EuropeanCall">European Call Option</a></li>
+                                                <li><a href='#' class="example" id="EuropeanPut">European Put Option</a></li>
+                                                <li><a href='#' class="example" id="PoliticalArb">Arbitrage in Political Markets</a></li>
+                                                <li><a href='#' class="example" id="RiskNeutralAI">Risk Neutral Probabilities for American Idol</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a href = '#'>Puzzles</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href='#' class="example_glpk" id="crypto">GLPK/crypto.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="magic">GLPK/magic.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="money">GLPK/money.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="queens">GLPK/queens.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="shikaku">GLPK/shikaku</a></li>
+                                                <li><a href='#' class="example_glpk" id="sudoku">GLPK/sudoku</a></li>
+                                                <li><a href='#' class="example_glpk" id="zebra">GLPK/zebra</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a href = '#'>Advanced Techniques</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href='#' class="example" id="MVNormal">Sampling a Multivariate Normal Distribution</a></li>
+                                                <li><a href='#' class="example" id="PiecewiseLinearInterpolation">Piecewise Linear Interpolation</a></li>
+                                                <li><a href='#' class="example" id="Sorting">Sorting</a></li>
+                                                <li><a href='#' class="example_glpk" id="sorting">GLPK/sorting.mod</a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a href = '#'>Other GLPK Examples</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a href='#' class="example_glpk" id="bpp">bpp.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="cal">cal.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="cf12a">cf12a.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="cf12b">cf12b.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="cflsq">cflsq.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="color">color.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="dea">dea.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="egypt">egypt.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="food">food.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="food2">food2.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="graph">graph.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="maxcut">maxcut.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="maxflow">maxflow.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="mfasp">mfasp.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="mfvsp">mfvsp.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="min01ks">min01ks.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="misp">misp.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="mvcp">mvcp.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="prod">prod.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="qfit">qfit.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="sat">sat.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="spp">spp.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="todd">todd.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="xyacfs">xyacfs.mod</a></li>
+                                                <li><a href='#' class="example_glpk" id="yacfs">yacfs.mod</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                 </li>
 
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #bbbbbb;">Examples<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-submenu">
-                                        <a href="#">MathProg Basics</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' onclick="loadEx('HelloWorld.html','HelloWorld.mod')">Hello, World</a></li>
-	                                        <li><a href='#' onclick="loadEx('lpTwoVars.html','lpTwoVars.mod')">Linear Program in Two Variables</a></li>
-	                                        <li><a href='#' onclick="loadEx('linearEqns.html','linearEqns.mod')">Linear Equations</a></li>
-                                            <li><a href='#' onclick="loadEx('Sets.html','Sets.mod')">Sets</a></li>
-                                            <li><a href='#' onclick="loadEx('Parameters.html','Parameters.mod')">Parameters </a></li>
-                                       <!--     <li><a href='#' onclick="loadEx('Tuples.html','Tuples.mod')">Tuples</a></li> -->
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="#">Tables and Charts</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' onclick="loadEx('_blank.html','ChartTools.mod')">Google Charts</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Mixture Problems</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' onclick="loadEx('giapetto.html','giapetto.mod')">Giapetto's Workshop</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/plan.mod')">GLPK/plan.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('stigler.html','../glpk-4.47/examples/stigler.mod')">GLPK/stigler.mod</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Scheduling</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' onclick="loadEx('ProjectCPM.html','ProjectCPM.mod')">Project Management with CPM</a></li>
-                                            <li><a href='#' onclick="loadEx('Bottleneck.html','Bottleneck.mod')">Machine Bottleneck</a></li>
-                                            <li><a href='#' onclick="loadEx('JobShop.html','JobShop.mod')">Job Shop Scheduling</a></li>
-                                            <li><a href='#' onclick="loadEx('TaskOrder.html','TaskOrder.mod')">Linear Ordering of Tasks</a></li>
-                                            <li><a href='#' onclick="loadEx('JesuitVols.html','JesuitVols.mod')">Jesuit Volunteers Corps</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/cpp.mod')">GLPK/cpp.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/jssp.mod')">GLPK/jssp.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/shiftcover.mod')">GLPK/shiftcover.mod</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Transportation/Assignment</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' onclick="loadEx('TransportNet.html','TransportNet.mod')">Transportation Network</a></li>
-                                            <li><a href='#' onclick="loadEx('StockCutting.html','StockCutting.mod')">Stock Cutting</a></li>
-                                            <li><a href='#' onclick="loadEx('TableSeating.html','TableSeating.mod')">Table Seating</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/assign.mod')">GLPK/assign.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/fctp.mod')">GLPK/fctp.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/gap.mod')">GLPK/gap.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/train.mod')">GLPK/train.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/transp.mod')">GLPK/transp.mod</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Route Optimization</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' onclick="loadEx('tsptw.html','tsptw.mod')">Traveling Salesman with Time Windows</a></li>
-                                            <li><a href='#' onclick="loadEx('vrp.html','vrp.mod')">Vehicle Routing</a></li>
-                                            <li><a href='#' onclick="loadEx('vrptw.html','vrptw.mod')">Vehicle Routing with Time Windows</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/tsp.mod')">GLPK/tsp.mod</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Stochastic Programming</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' onclick="loadEx('Newsvendor.html','Newsvendor.mod')">Newsvendor Problem</a></li>
-                                            <li><a href='#' onclick="loadEx('PlantExpansion.html','PlantExpansion.mod')">Scenario Analysis for a Plant Expansion</a></li>
-                                            <li><a href='#' onclick="loadEx('_blank.html','RNGambling.mod')">Stochastic Dynamic Programming: Risk Neutral Gambler</a></li>
-                                            <li><a href='#' onclick="loadEx('RAGambling.html','RAGambling.mod')">Stochastic Dynamic Programming: Risk Averse Gambler</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href='#'>Engineering</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' onclick="loadEx('DataReconciliation.html','DataReconciliation.mod')">Data Reconciliation</a></li>
-                                            <li><a href='#' onclick="loadEx('_blank.html','Solvay.mod')">Generation/Consumption Analysis</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Finance</a>
-                                        <ul class="dropdown-menu">
-	                                        <li><a href='#' onclick="loadEx('retirement.html','retirement.mod')">Saving for Retirement</a></li>
-                                            <li><a href='#' onclick="loadEx('PortfolioMAD.html','PortfolioMAD.mod')">Portfolio Optimization (MAD)</a></li>
-                                            <li><a href='#' onclick="loadEx('_blank.html','AmericanCall.mod')">American Call Option</a></li>
-                                            <li><a href='#' onclick="loadEx('_blank.html','AmericanPut.mod')">American Put Option</a></li>
-                                            <li><a href='#' onclick="loadEx('_blank.html','EuropeanCall.mod')">European Call Option</a></li>
-                                            <li><a href='#' onclick="loadEx('_blank.html','EuropeanPut.mod')">European Put Option</a></li>
-                                            <li><a href='#' onclick="loadEx('PoliticalArb.html','PoliticalArb.mod')">Arbitrage in Political Markets</a></li>
-                                            <li><a href='#' onclick="loadEx('RiskNeutralAI.html','RiskNeutralAI.mod')">Risk Neutral Probabilities for American Idol</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Puzzles</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/crypto.mod')">GLPK/crypto.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/magic.mod')">GLPK/magic.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/money.mod')">GLPK/money.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('queens.html','../glpk-4.47/examples/queens.mod')">GLPK/queens.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/shikaku.mod')">GLPK/shikaku</a></li>
-                                            <li><a href='#' onclick="loadEx('sudoku.html','../glpk-4.47/examples/sudoku.mod')">GLPK/sudoku</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/zebra.mod')">GLPK/zebra</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Advanced Techniques</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' onclick="loadEx('_blank.html','MVNormal.mod')">Sampling a Multivariate Normal Distribution</a></li>
-                                            <li><a href='#' onclick="loadEx('_blank.html','PiecewiseLinearInterpolation.mod')">Piecewise Linear Interpolation</a></li>
-                                            <li><a href='#' onclick="loadEx('Sorting.html','Sorting.mod')">Sorting</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/sorting.mod')">GLPK/sorting.mod</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Other GLPK Examples</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/bpp.mod')">bpp.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/cal.mod')">cal.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/cf12a.mod')">cf12a.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/cf12b.mod')">cf12b.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/cflsq.mod')">cflsq.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/color.mod')">color.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/dea.mod')">dea.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/egypt.mod')">egypt.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/food.mod')">food.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/food2.mod')">food2.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/graph.mod')">graph.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/maxcut.mod')">maxcut.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/maxflow.mod')">maxflow.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/mfasp.mod')">mfasp.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/mfvsp.mod')">mfvsp.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/min01ks.mod')">min01ks.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/misp.mod')">misp.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/mvcp.mod')">mvcp.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/prod.mod')">prod.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/qfit.mod')">qfit.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/sat.mod')">sat.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/spp.mod')">spp.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/todd.mod')">todd.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/xyacfs.mod')">xyacfs.mod</a></li>
-                                            <li><a href='#' onclick="loadEx('glpk.html','../glpk-4.47/examples/yacfs.mod')">yacfs.mod</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+                                    <!-- MathProg Docs menu -->
+                                <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #dddddd;">Resources<b class="caret"></b></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a rel="external" href = 'https://www3.nd.edu/~jeff/mathprog/glpk-4.47/doc/gmpl.pdf'>Language Reference (gmpl.pdf)</a></li>
+                                        <li><a rel="external" href = 'http://en.wikibooks.org/wiki/GLPK/GMPL_(MathProg)'>MathProg Wikibook</a></li>
+                                        <li><a rel="external" href = 'http://www.ampl.com/BOOK/download.html'>AMPL Book</a></li>
+                                    </ul>
+                                </li>
 
-                            <!-- MathProg Docs menu -->
+                                <!-- About... menu -->
+                                <li class="dropdown">
+                                    <a id='menuAbout' href="#" class="dropdown-toggle" style="color: #dddddd;">About...</a>
+                                </li>
 
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #bbbbbb;">Resources<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-	                                <li><a rel="external" href = 'glpk-4.47/doc/gmpl.pdf'>Language Reference (gmpl.pdf)</a></li>
-                                    <li><a rel="external" href = 'http://en.wikibooks.org/wiki/GLPK/GMPL_(MathProg)'>MathProg Wikibook</a></li>
-                                    <li><a rel="external" href = 'http://lipas.uwasa.fi/~tsottine/lecture_notes/or.pdf'>Operations Research with GLPK</a></li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>IBM developerWorks</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a rel="external" href = 'http://www.ibm.com/developerworks/linux/library/l-glpk1/'>GLPK, Part 1</a></li>
-                                            <li><a rel="external" href = 'http://www.ibm.com/developerworks/linux/library/l-glpk2/'>GLPK, Part 2</a></li>
-                                            <li><a rel="external" href = 'http://www.ibm.com/developerworks/linux/library/l-glpk3/'>GLPK, Part 3</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a rel="external" href = 'http://www.ampl.com/BOOK/download.html'>AMPL Book</a></li>
-                                    <li><a rel="external" href = 'http://MathP.org'>MathP.org</a></li>
-                                </ul>
-                            </li>
-
-                            <!-- About... menu -->
-
-                            <li class="dropdown">
-                                <a id='menuAbout' href="#" class="dropdown-toggle" style="color: #bbbbbb;">About...</a>
-                            </li>
-
-                        </ul> <!-- end of top level menus -->
-                    </div> <!-- for mobile devices -->
+                            </ul> <!-- end of top level menus -->
+                        </div> <!-- for mobile devices -->
                     </div> <!--/.nav-collapse -->
                 </div> <!-- /.container -->
-            </div> <!-- /.navbar-inner -->
-        </div> <!-- /.navbar-->
-
+             </div> <!-- /.navbar-inner -->
+        </div> <!-- /.navbar--> 
 
         <div id='content' style="padding-top: 40px;">
 
             <!-- Instruction -->
-
             <div id='instructionContent'></div>
 
             <!-- Model Editor -->
-
             <br>
             <h4 id='modelFileName'></h4>
             <textarea id='editor'></textarea><br>
 
             <!-- Button Bar -->
-
-            <div id='btnBar' style='width:750px;margin-top:-5px;'>
+            <div id='btnBar' style='width:100%;margin-top:-5px;'>
                 <div class="btn-group" style="float:left;">
-
-                    <!-- Clear All -->
                     <button class="btn" id='btnClearAll' title='Clear description, model, and output.'>Clear All</button>
-
-                    <!-- Upload button -->
-                    <input type='file' id='files' name='files[]' style="display: none"/>
-                    <button class="btn" onclick="$('input[id=files]').click()" style="display: none">Upload...</button>
-
-                    <!-- Download... button and filename -->
-                    <button class="btn" id='btnSaveFile' style="display: none">Download...</button>
-
-                    <!-- Open Model... button -->
                     <button class="btn" id='btnOpenModel' title='Open model from file.'>Open Model...</button>
-
-                    <!-- Save Model... button -->
                     <button class="btn" id='btnSaveModel' title='Save model to file.'>Save Model...</button>
-
-                    <!-- Create Link... button and filename -->
-                    <button class="btn" id='btnCreateLink' title='Embed the model into a web link.'>Create Link...</button>
-
                 </div>
 
                 <!-- LP and LP+MIP Radio Buttons -->
@@ -385,20 +327,19 @@
                     <button id='btnSolveMIP' type="button" class="btn" style="display:none">MIP</button>
                 </div>
 
-                <!-- Solve button -->
                 <button class="btn btn-success" id='btnSolve' style='float: right;' title='Compute a solution to the model.'>Solve</button>
 
-            </div> <!-- /#btnBar -->
+            </div>
             <p></p><br>
 
             <!-- Message Panel -->
             <div id="messagePanel" style="min-height:38px;">
-                <div id="message" class="alert" style="margin-top: 18px;width: 700px;">
+                <div id="message" class="alert" style="margin-top: 18px; margin-right: 0px;">
                 </div>
             </div>
 
             <!-- Output Tabs -->
-            <div class="tabbable" style="width: 750px; margin-top:0px; margin-bottom:0px;">
+            <div class="tabbable" style="width: 100%; margin-top:0px; margin-bottom:0px;">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#tab1" data-toggle="tab"><h4 style="margin-top:5px; margin-bottom:5px;">Dashboard</h4></a></li>
                     <li><a href="#outputTab" data-toggle="tab"><h4 style="margin-top:5px; margin-bottom:5px;">Output</h4></a></li>
@@ -411,7 +352,7 @@
                     <!-- Dashboard Pane -->
                     <div class="tab-pane active" id="tab1">
                         <div id='dashboardPanel' style="min-height: 380px;">
-                           <table id='dashboardTable' class="table table-condensed table-bordered table-hover" style="width: 750px">
+                           <table id='dashboardTable' class="table table-condensed table-bordered table-hover" style="width: 100%">
                                 <tr><td>Problem Type</td><td id="dashboardProb" class="dashboardCell"></td></tr>
                                 <tr><td>Objective</td><td id="dashboardObj" class="dashboardCell"></td></tr>
                                 <tr><td>Objective Value</td><td id="dashboardObjVal" class="dashboardCell"></td></tr>
@@ -431,14 +372,12 @@
                     <div class="tab-pane" id="dataTab" style="min-height: 380px;">
                     </div>
                     <!-- Variables Pane -->
-                    <div class="tab-pane" id="variableTab" style="min-height: 380px; width: 750px;">
-                        <div id="variableFilterDiv"></div>
-                        <div id="variableTableDiv" style="width: 750px;"></div>
+                    <div class="tab-pane" id="variableTab" style="min-height: 380px; width: 100%;">
+                        <table class="table table-striped table-condensed" id="variableTableDiv"></table>
                     </div>
                     <!-- Constraints Pane -->
-                    <div class="tab-pane" id="constraintTab" style="min-height: 380px; width: 750px;">
-                        <div id="constraintFilterDiv"></div>
-                        <div id="constraintTableDiv" style="width: 750px;"></div>
+                    <div class="tab-pane" id="constraintTab" style="min-height: 380px; width: 100%;">
+                        <table class="table table-striped table-condensed" id="constraintTableDiv"></table>
                     </div>
                     <!-- GLPK Log Pane-->
                     <div class="tab-pane" id="tab5" style="min-height: 380px;">
@@ -446,7 +385,7 @@
                     </div>
                 </div>
             </div>
-
+            
         </div>  <!-- end of content -->
 
         <div id='footer'>
@@ -454,7 +393,7 @@
 
     </div>  <!-- end of container -->
 
-<script src="./js/main.js"></script>
+<script src="js/main.js"></script>
 
 </body>
 </html>

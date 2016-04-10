@@ -1,46 +1,51 @@
 /* main.js loads at end of mathprog.html */
 
+console.log('Loading main.js');
+
 /* fix browser compatability issues */
 
 // for IE8 compatability with trim() per http://stackoverflow.com/questions/2308134/
 if(typeof String.prototype.trim !== 'function') {
   String.prototype.trim = function() {
     return this.replace(/^\s+|\s+$/g, '');
-  }
+  };
 }
 
 // for iOS compatability with nav menus
 $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
 
+$(document).ready(function () {
+    $('#menuHome').click();
+});
+
 // Global Variables
 var fileSep = "/";
 var exampleDir = "./examples";
 var descriptionDir = "./descriptions";
-var homeURL = 'https://www3.nd.edu/~jeff/mathprog/mathprog.html';
-var fileId = new Array();
+var fileId = [];
 var fileCount = 0;
-var ds = new Array();
+var ds = [];
 
-var glpColKind = new Array();
+var glpColKind = [];
 glpColKind[GLP_CV] = 'Real';
 glpColKind[GLP_IV] = 'Integer';
 glpColKind[GLP_BV] = 'Binary';
 
-var glpColStatus = new Array();
+var glpColStatus = [];
 glpColStatus[GLP_BS] = 'Basic';
 glpColStatus[GLP_NL] = 'LoBnd';
 glpColStatus[GLP_NU] = 'UpBnd';
 glpColStatus[GLP_NF] = 'Free';
 glpColStatus[GLP_NS] = 'Fixed';
 
-var glpRowStatus = new Array();
+var glpRowStatus = [];
 glpRowStatus[GLP_BS] = 'Basic';
 glpRowStatus[GLP_NL] = 'LoBnd';
 glpRowStatus[GLP_NU] = 'UpBnd';
 glpRowStatus[GLP_NF] = 'Free';
 glpRowStatus[GLP_NS] = 'Fixed';
 
-var glpStatus = new Array();
+var glpStatus = [];
 glpStatus[GLP_OPT]    = "Solution is optimal.";
 glpStatus[GLP_FEAS]   = "Solution is feasible.";
 glpStatus[GLP_INFEAS] = "Solution is infeasible.";
@@ -55,8 +60,10 @@ glp_set_print_func(printLog);
 // modal callback function
 var modalCallback = function() {};
 
-// variable to save name of fil
+// variable to save name of file
 var saveAnchor = document.getElementById('saveAnchor');
+
+console.log('Initialize edit pane.');
 
 // attach CodeMirror to the textarea 'editor'
 var modelEditor = CodeMirror.fromTextArea(document.getElementById("editor"), {
@@ -70,14 +77,11 @@ modelEditor.markClean();
 $(modelEditor.getWrapperElement()).resizable({
   resize: function() {
     modelEditor.setSize($(this).width(), $(this).height());
-    modelEditor.refresh()
+    modelEditor.refresh();
   }
 });
 
 // other initializations
-
-google.load('visualization', '1.0', { packages:['controls'] });
-
 $('#modalAbout').modal({show:false});
 $('#modalSave').modal({show:false});
 $('#modalSaveAlert').modal({show:false});
@@ -90,24 +94,22 @@ $('#btnCreateLink').tooltip();
 $('#btnClearAll').click(clearAll);
 $('#btnOpenModel').click(openModel);
 $('#btnSaveModel').click(saveModel);
-$('#btnCreateLink').click(createLink);
 $('#btnSolve').click(solve);
-
 $('#btnSolveMIP').click();
 
 /**********************************************************************
- load example
+ load example files
 **********************************************************************/
 
-function loadDescription(filename) {
-    filename = filename || '';
-    if (filename) {
-        $.get(descriptionDir + fileSep + filename, function(data) {
-            $('#instructionContent').html(data);
-            MathJax.Hub.Queue(["Typeset",MathJax.Hub,document.getElementById('instructionContent')]);
-        });
-    }
-}
+$(".example").click(function(){
+	var id = this.id;
+	loadEx(id + ".html", id + ".mod");
+});
+
+$(".example_glpk").click(function(){
+	var id = this.id;
+	loadEx("glpk.html", "../glpk-4.60/examples/" + id + ".mod");
+});
 
 function loadEx(descriptionFile,modelFile) {
     if (modelEditor.isClean()) {
@@ -117,8 +119,20 @@ function loadEx(descriptionFile,modelFile) {
         modalCallback = function() {
             modelEditor.markClean();
             loadEx(descriptionFile,modelFile);
-        }
+        };
         $('#modalConfirmClearAll').modal({show: true});
+    }
+}
+
+function loadDescription(filename) {
+    filename = filename || '';
+    if (filename) {
+        $.get(descriptionDir + fileSep + filename).done(function(data) {
+            $('#instructionContent').html(data);
+            renderMathInElement(document.getElementById("instructionContent"));
+        }).fail(function(){
+            $('#instructionContent').empty();
+		});
     }
 }
 
@@ -132,12 +146,12 @@ function loadModel(filename) {
                 modelEditor.markClean();
                 $('#modelFileName').html(filename);
                 clearOutput();
-            })
+            });
         } else {
             modalCallback = function() {
                modelEditor.markClean();
                loadModel(filename);
-            }
+            };
             $('#modalConfirmClearAll').modal({show: true});
         }
     }
@@ -162,46 +176,32 @@ function formatNumber(num,sig){
  variables pane
 **********************************************************************/
 
-function writeVariableTable() {
-    variableData = new google.visualization.DataTable();
-    variableData.addColumn({type:'string', label:'Name'});
-    variableData.addColumn({type:'string', label:'Kind'});
-    variableData.addColumn({type:'string', label:'Status'});
-    variableData.addColumn({type:'number', label:'LoBnd'});
-    variableData.addColumn({type:'number', label:'UpBnd'});
-    variableData.addColumn({type:'number', label:'Relaxed'});
-    variableData.addColumn({type:'number', label:'Sensitivity'});
-    variableData.addColumn({type:'number', label:'Solution'});
-
+function writeVariableTable() {	
+	$("#variableTableDiv").empty();
+	
+	s = "<th>Name</th>";
+	s = s + "<th>Kind</th>";
+	s = s + "<th>Status</th>";
+	s = s + "<th>LoBnd</th>";
+	s = s + "<th>UpBnd</th>";
+	s = s + "<th>Sensitivity</th>";
+	s = s + "<th>Solution</th>";
+	$("#variableTableDiv").append("<thead><tr>" + s + "</tr></thead>");
+	
     var soln = 0;
+	$("#variableTableDiv").append("<tbody>");
     for (var i = 1; i <= glp_get_num_cols(lp); i++) {
         soln = isMIP()?glp_mip_col_val(lp,i):glp_get_col_prim(lp,i);
-        variableData.addRow([
-            glp_get_col_name(lp,i),
-            glpColKind[glp_get_col_kind(lp,i)],
-            glpColStatus[glp_get_col_stat(lp,i)],
-            { v: glp_get_col_lb(lp,i), f: formatNumber(glp_get_col_lb(lp,i)) },
-            { v: glp_get_col_ub(lp,i), f: formatNumber(glp_get_col_ub(lp,i)) },
-            { v: glp_get_col_prim(lp,i), f: formatNumber(glp_get_col_prim(lp,i)) },
-            { v: glp_get_col_dual(lp,i), f: formatNumber(glp_get_col_dual(lp,i)) },
-            { v: soln, f: formatNumber(soln) }
-        ]);
-    }
-
-    variableFilter = new google.visualization.ControlWrapper({
-        'controlType': 'StringFilter',
-        'containerId': 'variableFilterDiv',
-        'options': {'filterColumnLabel': 'Name'}
-    });
-
-    variableTable = new google.visualization.ChartWrapper({
-        'chartType': 'Table',
-        'containerId': 'variableTableDiv'
-    })
-
-    variableDashboard = new google.visualization.Dashboard(document.getElementById('variableTab'));
-    variableDashboard.bind(variableFilter,variableTable);
-    variableDashboard.draw(variableData,{width: '750px'});
+		s = "<td>" + glp_get_col_name(lp,i) + "</td>";
+		s = s + "<td>" + glpColKind[glp_get_col_kind(lp,i)] + "</td>";
+		s = s + "<td>" + glpColStatus[glp_get_col_stat(lp,i)] + "</td>";
+		s = s + "<td>" + formatNumber(glp_get_col_lb(lp,i)) + "</td>";		
+		s = s + "<td>" + formatNumber(glp_get_col_ub(lp,i)) + "</td>";		
+		s = s + "<td>" + formatNumber(glp_get_col_dual(lp,i)) + "</td>";		
+		s = s + "<td>" + formatNumber(soln) + "</td>";
+        $("#variableTableDiv").append("<tr>" + s + "</tr>");
+	}
+	$("#variableTableDiv").append("</tbody>");
 }
 
 /**********************************************************************
@@ -209,46 +209,29 @@ function writeVariableTable() {
 **********************************************************************/
 
 function writeConstraintTable() {
-    constraintData = new google.visualization.DataTable();
-    constraintData.addColumn({type:'string', label:'Name'});
-    constraintData.addColumn({type:'string', label:'Status'});
-    constraintData.addColumn({type:'number', label:'LB'});
-    constraintData.addColumn({type:'number', label:'UB'});
-    constraintData.addColumn({type:'number', label:'Relax LP'});
-    constraintData.addColumn({type:'number', label:'Sensitivity'});
-    constraintData.addColumn({type:'number', label:'Solution'});
-
+	$("#constraintTableDiv").empty();
+	
+	s = "<th>Name</th>";
+	s = s + "<th>Status</th>";
+	s = s + "<th>LB</th>";
+	s = s + "<th>UB</th>";
+	s = s + "<th>Sensitivity</th>";
+	s = s + "<th>Solution</th>";
+		$("#constraintTableDiv").append("<thead><tr>" + s + "</tr></thead>");
+	
     var soln = 0;
+	$("#constraintTableDiv").append("<tbody>");
     for (var i = 1; i <= glp_get_num_rows(lp); i++) {
         soln = isMIP()?glp_mip_row_val(lp,i):glp_get_row_prim(lp,i);
-        constraintData.addRow([
-            glp_get_row_name(lp,i),
-            glpRowStatus[glp_get_row_stat(lp,i)],
-            { v: glp_get_row_lb(lp,i), f: formatNumber(glp_get_row_lb(lp,i)) },
-            { v: glp_get_row_ub(lp,i), f: formatNumber(glp_get_row_ub(lp,i)) },
-            { v: glp_get_row_prim(lp,i), f: formatNumber(glp_get_row_prim(lp,i)) },
-            { v: glp_get_row_dual(lp,i), f: formatNumber(glp_get_row_dual(lp,i)) },
-            { v: soln, f: formatNumber(soln) }
-        ]);
-    }
-
-    constraintFilter = new google.visualization.ControlWrapper({
-        'controlType': 'StringFilter',
-        'containerId': 'constraintFilterDiv',
-        'options': {'filterColumnLabel': 'Name'}
-    });
-
-    constraintTable = new google.visualization.ChartWrapper({
-        'chartType': 'Table',
-        'containerId': 'constraintTableDiv',
-        'options': {
-            width: 750
-        }
-    })
-
-    constraintDashboard = new google.visualization.Dashboard(document.getElementById('constraintTab'));
-    constraintDashboard.bind(constraintFilter,constraintTable);
-    constraintDashboard.draw(constraintData,{width: 750});
+		s = "<td>" + glp_get_row_name(lp,i) + "</td>";
+		s = s + "<td>" + glpRowStatus[glp_get_row_stat(lp,i)] + "</td>";
+		s = s + "<td>" + formatNumber(glp_get_row_lb(lp,i)) + "</td>";		
+		s = s + "<td>" + formatNumber(glp_get_row_ub(lp,i)) + "</td>";		
+		s = s + "<td>" + formatNumber(glp_get_row_dual(lp,i)) + "</td>";		
+		s = s + "<td>" + formatNumber(soln) + "</td>";
+        $("#constraintTableDiv").append("<tr>" + s + "</tr>");
+	}
+	$("#constraintTableDiv").append("</tbody>");
 }
 
 /**********************************************************************
@@ -297,17 +280,16 @@ function displayDashboard() {
     var nInt = glp_get_num_int(lp);
     var nBin = glp_get_num_bin(lp);
     var nRows = glp_get_num_rows(lp);
-    var problemType = '';
     var problemType =  glp_get_obj_name(lp)?'Optimization':'Feasibility';
-    if (nVars == 0) {
+    if (nVars === 0) {
         problemType = 'Empty';
-    } else if (nBV + nIV == 0) {
+    } else if (nBV + nIV === 0) {
         problemType = 'Linear ' + problemType;
-    } else if (nCV + nIV == 0) {
+    } else if (nCV + nIV === 0) {
         problemType = '0-1 ' + problemType;
-    } else if (nCV == 0) {
+    } else if (nCV === 0) {
         problemType = 'Integer ' + problemType;
-    } else if (nIV == 0) {
+    } else if (nIV === 0) {
         problemType = 'Mixed 0-1 ' + problemType;
     } else {
         problemType = 'Mixed Integer ' + problemType;
@@ -332,27 +314,53 @@ function clearDashboard (){
 }
 $('.dashboardCell').css('text-align','right');
 
-function getURLParameter(name) {
-    return decodeURIComponent(
-            (new RegExp('[?|&]' + name + '=' +
-                '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
-}
+console.log('Setup Menus.');
 
 // open menu links w/ rel="external" in new windows to avoid losing edits
 $('a[rel="external"]').click(function() {
     $(this).attr('target','_blank');
-})
+});
 
 // menu item Home
 $('#menuHome').click(function () {
     loadEx('welcome.html','untitled.mod');
     $('#solveMIP').click();
-})
+});
+
+$('#menuNew').click(function() {
+    clearAll();
+});
+
+var fileEntry;
+
+$('#menuOpen').click(function() {
+    if (modelEditor.isClean()) {
+        chrome.fileSystem.chooseEntry(
+            {type : 'openFile'},
+            function(fe) {
+                fileEntry = fe;
+                fe.file(function(file) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        modelEditor.setValue(e.target.result);
+                        modelEditor.markClean();
+                        $('#modelFileName').html(fe.name);
+                        clearOutput();
+                    };
+                    reader.readAsText(file);
+                },
+                function() {
+                    console.log('error reading file');
+                });
+            }
+        );
+    }
+});
 
 // menu item About...
 $('#menuAbout').click(function () {
     $('#modalAbout').modal({show:true});
-})
+});
 
 function clearAll() {
     if (modelEditor.isClean()) {
@@ -380,9 +388,9 @@ function clearOutput() {
 
 function clearData() {
     $('#dataTab').html('');
-    fileId = new Array();
+    fileId = [];
     fileCount = 0;
-    ds = new Array();
+    ds = [];
 }
 
 function openModel() {
@@ -399,7 +407,7 @@ function openModel() {
                     modelEditor.markClean();
                     $('#modelFileName').html(FPFile.filename);
                     clearOutput();
-                })
+                });
             },
             function(FPError) {
                 console.log(FPError.toString());
@@ -409,7 +417,7 @@ function openModel() {
         modalCallback = function () {
             modelEditor.markClean();
             openModel();
-        }
+        };
         $('#modalConfirmClearAll').modal({show: true});
     }
 }
@@ -459,13 +467,6 @@ $('#files').on('change', function (evt) {
     reader.readAsText(file);
 });
 
-function createLink() {
-    var link = homeURL + '?model=' + encodeURIComponent(modelEditor.getValue());
-    $('#linkTextArea').val(link);
-    $('#linkLength').html(link.length);
-    $('#modalCreateLink').modal({show:true});
-}
-
 // button modal Confirm Clear All
 $('#btnModalConfirmClearAll').click(function () {
     modalCallback();
@@ -487,7 +488,7 @@ function MathProgError(message,arg) {
     this.arg = arg || null;
     this.stack = (new Error()).stack;
 }
-MathProgError.prototype = new Error;
+MathProgError.prototype = new Error();
 
 function tablecb(arg,mode,data) {
     switch(arg[1]) {
@@ -500,7 +501,7 @@ function tablecb(arg,mode,data) {
         default:
             throw new Error('Unrecognized table driver ' + arg[1]);
     }
-};
+}
 
 function tablecb_chart(arg,mode,data) {
     switch(mode) {
@@ -531,7 +532,7 @@ function tablecb_chart(arg,mode,data) {
                     width: 750,
 
                     hAxis: {title: tableData.getColumnLabel(0)}
-                }
+                };
                 if (arg.length > 4) {
                     options = $.extend(options,eval('(' + arg[4] + ')'));
                 }
@@ -639,7 +640,7 @@ function tablecb_csv(arg,mode,data) {
             document.getElementById('outputTab').appendChild(document.createElement('div'));
             var div = document.getElementById('outputTab').lastChild;
             $(div).html('<a><h4>' + arg[2] + '</h4></a>');
-            $(div).click(function(){saveCSV(arg[2],data.toString())});
+            $(div).click(function(){saveCSV(arg[2],data.toString());});
             div.style.paddingBottom = "20px";
             div.appendChild(document.createElement('pre'));
             var pre = div.lastChild;
@@ -698,7 +699,7 @@ function printOutput(value,filename){
         fileId[filename] = ++fileCount;
     }
     var OutputId = 'MathProgFile_' + fileId[filename].toString();
-    if (document.getElementById(OutputId) == null) {
+    if (document.getElementById(OutputId) === null) {
         $('<h4>'+filename+'</h4>').appendTo('#outputTab');
         $('<pre id = ' + OutputId + '></pre>').appendTo('#outputTab').css('padding-bottom','0.8em');
         $('<br>').appendTo('#outputTab');
@@ -779,11 +780,11 @@ GenericDriver.prototype["readRecord"] = function(dca){
 
     /* read fields */
     var line = this.data[this.cursor++];
-    if (line == null) return XEOF;
+    if (line === null) return XEOF;
 
     for (var k = 1; k <= mpl_tab_num_flds(dca); k++){
         var index = this.ref[mpl_tab_get_name(dca, k)];
-        if (index != null){
+        if (index !== null){
             var value = line[index];
             switch (typeof value){
                 case 'number':
@@ -823,7 +824,7 @@ function loadCSV(filename) {
             fileId[filename] = ++fileCount;
         }
         var dataId = 'MathProgFile_' + fileId[filename].toString();
-        if (document.getElementById(dataId) == null) {
+        if (document.getElementById(dataId) === null) {
             $('<h4>' + filename + '</h4>').appendTo('#dataTab');
             $('<pre id=' + dataId + '></pre>')
                 .appendTo('#dataTab')
@@ -851,7 +852,7 @@ function loadJSON(arg,callback) {
         if (response.isError()) {
             throw new Error(response.getMessage() + ' ' + response.getDetailMessage());
         } else {
-            if (document.getElementById(dataId) == null) {
+            if (document.getElementById(dataId) === null) {
                 $('<h4>' + filename + '</h4>').appendTo('#dataTab');
                 $('<div id=' + dataId + '></div>').appendTo('#dataTab').css('padding-bottom','2em');
             }
@@ -879,7 +880,7 @@ function solve() {
                 var arg = err.arg;
                 switch (arg[1]) {
                     case 'CSV':
-                        if (arg[3]==null) {
+                        if (arg[3]===null) {
                             var jqxhr = loadCSV(arg[2]);
                             jqxhr.done(solve);
                             jqxhr.fail(function(jqxhr, textStatus, errorThrown) {
@@ -903,7 +904,7 @@ function solve() {
         }
         return null;
     }
-};
+}
 
 function solveModel() {
     tic = Date.now();
@@ -932,7 +933,7 @@ function solveModel() {
     glp_simplex(lp, smcp);
 
     if (isMIP()) {
-        printLog('\nInteger optimization ...')
+        printLog('\nInteger optimization ...');
         glp_intopt(lp);
     }
 
@@ -949,8 +950,8 @@ function solveModel() {
         }
         glp_mpl_postsolve(tran,lp,isMIP()?GLP_MIP:GLP_SOL);
         displayDashboard();
-        google.load('visualization', '1.0', { packages:['controls'], callback: writeVariableTable});
-        google.load('visualization', '1.0', { packages:['controls'], callback: writeConstraintTable});
+		writeVariableTable();
+		writeConstraintTable();
      } else {
         throw new MathProgError((isMIP()?'MILP':'LP') + " failed. Consult GLPK Log.");
      }
