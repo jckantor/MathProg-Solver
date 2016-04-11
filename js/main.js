@@ -83,19 +83,17 @@ $(modelEditor.getWrapperElement()).resizable({
 
 // other initializations
 $('#modalAbout').modal({show:false});
-$('#modalSave').modal({show:false});
-$('#modalSaveAlert').modal({show:false});
+$('#modalConfirmClearAll').modal({show:false});
 
 $('#btnClearAll').tooltip();
 $('#btnOpenModel').tooltip();
 $('#btnSaveModel').tooltip();
-$('#btnCreateLink').tooltip();
+$('#btnSolve').tooltip();
 
 $('#btnClearAll').click(clearAll);
 $('#btnOpenModel').click(openModel);
 $('#btnSaveModel').click(saveModel);
 $('#btnSolve').click(solve);
-$('#btnSolveMIP').click();
 
 /**********************************************************************
  load example files
@@ -321,41 +319,48 @@ $('a[rel="external"]').click(function() {
     $(this).attr('target','_blank');
 });
 
-// menu item Home
-$('#menuHome').click(function () {
-    loadEx('welcome.html','untitled.mod');
-    $('#solveMIP').click();
-});
-
 $('#menuNew').click(function() {
     clearAll();
 });
 
+function loadEditor(fileName,text) {
+    modelEditor.setValue(text);
+    modelEditor.markClean();
+    $('#modelFileName').html(fileName);
+    clearOutput();
+}
+
 var fileEntry;
+
+function openFileInEditor () {
+    chrome.fileSystem.chooseEntry(
+        {type: 'openFile'},
+        function(fe) {
+            fileEntry = fe;
+            fe.file(function(file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    loadEditor(fe.name,e.target.result);
+                };
+                reader.readAsText(file);
+            },
+            function() {
+              console.log('Error reading file.');
+            });
+        }
+    );
+}
+
 
 $('#menuOpen').click(function() {
     if (modelEditor.isClean()) {
-        chrome.fileSystem.chooseEntry(
-            {type : 'openFile'},
-            function(fe) {
-                fileEntry = fe;
-                fe.file(function(file) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        modelEditor.setValue(e.target.result);
-                        modelEditor.markClean();
-                        $('#modelFileName').html(fe.name);
-                        clearOutput();
-                    };
-                    reader.readAsText(file);
-                },
-                function() {
-                    console.log('error reading file');
-                });
-            }
-        );
+        openFileInEditor();
+    } else {
+        $('#btnModalConfirmClearAll').click(openFileInEditor);
+        $('#modalConfirmClearAll').modal({show: true});
     }
 });
+
 
 // menu item About...
 $('#menuAbout').click(function () {
