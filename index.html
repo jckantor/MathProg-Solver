@@ -330,91 +330,90 @@
       </div> <!-- /.navbar-inner -->
     </nav> <!-- /.navbar--> 
 
-        <div id='content' style="padding-top: 40px;">
+    <div id='content' style="padding-top: 40px;">
 
-            <!-- Instruction -->
-            <div id='instructionContent'></div>
+      <!-- Instruction -->
+      <div id='instructionContent'></div>
+      <br>
 
-            <!-- Model Editor -->
-            <br>
-            <h4 id='modelFileName'></h4>
-            <textarea id='editor'></textarea><br>
+      <!-- Model Editor -->
+      <h4 id='modelFileName'></h4>
+      <textarea id='editor'></textarea><br>
 
-            <!-- Button Bar -->
-            <div id='btnBar' style='width:100%;margin-top:-5px;'>
-                <div class="btn-group" style="float:left;">
-                    <button class="btn" id='btnNewModel' title='Clear description, model, and output.'>New Model</button>
-                    <button class="btn" id='btnOpenModel' title='Open model from file.'>Open Model...</button>
-                    <button class="btn" id='btnSaveModel' title='Save model to file.'>Save Model...</button>
-                </div>
-
-                <button class="btn btn-success" id='btnSolveModel' style='float: right;' title='Compute a solution to the model.'>Solve</button>
-
-            </div>
-            <br>
-
-            <!-- Message Panel -->
-            <div id="messagePanel" style="min-height:38px;">
-                <div id="message" class="alert" style="margin-top: 18px; margin-right: 0px;">
-                </div>
-            </div>
-
-            <!-- Output Tabs -->
-            <div class="tabbable" style="width: 100%; margin-top:0px; margin-bottom:0px;">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#tab1" data-toggle="tab"><h4 style="margin-top:5px; margin-bottom:5px;">Dashboard</h4></a></li>
-                    <li><a href="#outputTab" data-toggle="tab"><h4 style="margin-top:5px; margin-bottom:5px;">Output</h4></a></li>
-                    <li><a href="#dataTab" data-toggle="tab"><h4 style="margin-top:5px; margin-bottom:5px;">Data Sources</h4></a></li>
-                    <li><a href="#variableTab" data-toggle="tab"><h4 style="margin-top:5px; margin-bottom:5px;">Variables</h4></a></li>
-                    <li><a href="#constraintTab" data-toggle="tab"><h4 style="margin-top:5px; margin-bottom:5px;">Constraints</h4></a></li>
-                    <li><a href="#tab5" data-toggle="tab"><h4 style="margin-top:5px; margin-bottom:5px;">Log</h4></a></li>
-                </ul>
-                <div class="tab-content">
-                    <!-- Dashboard Pane -->
-                    <div class="tab-pane active" id="tab1">
-                        <div id='dashboardPanel' style="min-height: 380px;">
-                           <table id='dashboardTable' class="table table-condensed table-bordered table-hover" style="width: 100%">
-                                <tr><td>Problem Type</td><td id="dashboardProb" class="dashboardCell"></td></tr>
-                                <tr><td>Objective</td><td id="dashboardObj" class="dashboardCell"></td></tr>
-                                <tr><td>Objective Value</td><td id="dashboardObjVal" class="dashboardCell"></td></tr>
-                                <tr><td>Continuous Variables</td><td id="dashboardNvars" class="dashboardCell"></td></tr>
-                                <tr><td>Non-binary Integer Variables</td><td id="dashboardNints" class="dashboardCell"></td></tr>
-                                <tr><td>Binary Variables</td><td id="dashboardNbins" class="dashboardCell"></td></tr>
-                                <tr><td>Number of Variables</td><td id="dashboardNcols" class="dashboardCell"></td></tr>
-                                <tr><td>Number of Constraints</td><td id="dashboardNrows" class="dashboardCell"></td></tr>
-                                <tr><td>Number of Nonzero Coefficients</td><td id="dashboardNnz" class="dashboardCell"></td></tr>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- Model Output Pane -->
-                    <div class="tab-pane" id="outputTab" style="min-height: 380px;">
-                    </div>
-                    <!-- Data Sources Pane -->
-                    <div class="tab-pane" id="dataTab" style="min-height: 380px;">
-                    </div>
-                    <!-- Variables Pane -->
-                    <div class="tab-pane" id="variableTab" style="min-height: 380px; width: 100%;">
-                        <table class="table table-striped table-condensed" id="variableTableDiv"></table>
-                    </div>
-                    <!-- Constraints Pane -->
-                    <div class="tab-pane" id="constraintTab" style="min-height: 380px; width: 100%;">
-                        <table class="table table-striped table-condensed" id="constraintTableDiv"></table>
-                    </div>
-                    <!-- GLPK Log Pane-->
-                    <div class="tab-pane" id="tab5" style="min-height: 380px;">
-                        <pre id='logContent'  style="width: 730px;min-height: 200px;"></pre><br>
-                    </div>
-                </div>
-            </div>
-            
-        </div>  <!-- end of content -->
-
-        <div id='footer'>
+      <!-- Button Bar -->
+      <div id='btnBar' style='width:100%;margin-top:-5px;'>
+        <div class="btn-group" style="float:left;">
+          <button class="btn" id='btnNewModel' title='Clear description, model, and output.'>New Model</button>
+          <button class="btn" id='btnOpenModel' title='Open model from file.'>Open Model...</button>
+          <button class="btn" id='btnSaveModel' title='Save model to file.'>Save Model...</button>
         </div>
+        <button class="btn btn-success" id='btnSolveModel' style='float: right;' title='Compute a solution to the model.'>Solve</button>
+      </div>
+      <br>
+      
+      <!-- Message Panel -->
+      <div id="messagePanel" style="min-height:38px;">
+        <div id="message" class="alert" style="margin-top: 18px; margin-right: 0px;"></div>
+      </div>
 
-    </div>  <!-- end of container -->
+      <!-- Output Tabs -->
+      <div class="tabbable" style="width: 100%; margin-top:0px; margin-bottom:0px;">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab1" data-toggle="tab"><h4 style="margin-top:3px; margin-bottom:3px;">Dashboard</h4></a></li>
+          <li><a href="#outputTab" data-toggle="tab"><h4 style="margin-top:3px; margin-bottom:3px;">Output</h4></a></li>
+          <li><a href="#dataTab" data-toggle="tab"><h4 style="margin-top:3px; margin-bottom:3px;">Data</h4></a></li>
+          <li><a href="#variableTab" data-toggle="tab"><h4 style="margin-top:3px; margin-bottom:3px;">Variables</h4></a></li>
+          <li><a href="#constraintTab" data-toggle="tab"><h4 style="margin-top:3px; margin-bottom:3px;">Constraints</h4></a></li>
+          <li><a href="#tab5" data-toggle="tab"><h4 style="margin-top:3px; margin-bottom:3px;">Log</h4></a></li>
+        </ul>
+        
+        <div class="tab-content">
+          
+          <!-- Dashboard Pane -->
+          <div class="tab-pane active" id="tab1">
+            <div id='dashboardPanel' style="min-height: 380px;">
+              <table id='dashboardTable' class="table table-condensed table-bordered table-hover" style="width: 100%">
+                <tr><td>Problem Type</td><td id="dashboardProb" class="dashboardCell"></td></tr>
+                <tr><td>Objective</td><td id="dashboardObj" class="dashboardCell"></td></tr>
+                <tr><td>Objective Value</td><td id="dashboardObjVal" class="dashboardCell"></td></tr>
+                <tr><td>Continuous Variables</td><td id="dashboardNvars" class="dashboardCell"></td></tr>
+                <tr><td>Non-binary Integer Variables</td><td id="dashboardNints" class="dashboardCell"></td></tr>
+                <tr><td>Binary Variables</td><td id="dashboardNbins" class="dashboardCell"></td></tr>
+                <tr><td>Number of Variables</td><td id="dashboardNcols" class="dashboardCell"></td></tr>
+                <tr><td>Number of Constraints</td><td id="dashboardNrows" class="dashboardCell"></td></tr>
+                <tr><td>Number of Nonzero Coefficients</td><td id="dashboardNnz" class="dashboardCell"></td></tr>
+              </table>
+            </div>
+          </div>
+          
+          <!-- Model Output Pane -->
+          <div class="tab-pane" id="outputTab" style="min-height: 380px;"></div>
+                    
+          <!-- Data Sources Pane -->
+          <div class="tab-pane" id="dataTab" style="min-height: 380px;"></div>
+          
+          <!-- Variables Pane -->
+          <div class="tab-pane" id="variableTab" style="min-height: 380px; width: 100%;">
+            <table class="table table-striped table-condensed" id="variableTableDiv"></table>
+          </div>
+          
+          <!-- Constraints Pane -->
+          <div class="tab-pane" id="constraintTab" style="min-height: 380px; width: 100%;">
+            <table class="table table-striped table-condensed" id="constraintTableDiv"></table>
+          </div>
+                    
+          <!-- GLPK Log Pane-->
+          <div class="tab-pane" id="tab5" style="min-height: 380px;">
+            <pre id='logContent'  style="width: 730px;min-height: 200px;"></pre><br>
+          </div>
+          
+        </div> <!-- end of tab-content -->
+      </div> <!-- end of tabtable -->
+    </div>  <!-- end of content -->
 
-<script src="js/main.js"></script>
+  </div>  <!-- end of container -->
+
+  <script src="js/main.js"></script>
 
 </body>
 </html>
