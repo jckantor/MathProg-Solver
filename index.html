@@ -352,21 +352,15 @@
             <!-- Button Bar -->
             <div id='btnBar' style='width:100%;margin-top:-5px;'>
                 <div class="btn-group" style="float:left;">
-                    <button class="btn" id='btnClearAll' title='Clear description, model, and output.'>Clear All</button>
+                    <button class="btn" id='btnNewModel' title='Clear description, model, and output.'>New Model</button>
                     <button class="btn" id='btnOpenModel' title='Open model from file.'>Open Model...</button>
                     <button class="btn" id='btnSaveModel' title='Save model to file.'>Save Model...</button>
                 </div>
 
-                <!-- LP and LP+MIP Radio Buttons -->
-                <div class="btn-group" data-toggle="buttons-radio" style='float: right;'>
-                    <button id='btnSolveLP' type="button" class="btn" style="display:none">LP</button>
-                    <button id='btnSolveMIP' type="button" class="btn" style="display:none">MIP</button>
-                </div>
-
-                <button class="btn btn-success" id='btnSolve' style='float: right;' title='Compute a solution to the model.'>Solve</button>
+                <button class="btn btn-success" id='btnSolveModel' style='float: right;' title='Compute a solution to the model.'>Solve</button>
 
             </div>
-            <p></p><br>
+            <br>
 
             <!-- Message Panel -->
             <div id="messagePanel" style="min-height:38px;">

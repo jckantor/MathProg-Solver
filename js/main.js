@@ -4,19 +4,7 @@ console.log('Loading main.js');
 
 /* fix browser compatability issues */
 
-// for IE8 compatability with trim() per http://stackoverflow.com/questions/2308134/
-if(typeof String.prototype.trim !== 'function') {
-  String.prototype.trim = function() {
-    return this.replace(/^\s+|\s+$/g, '');
-  };
-}
-
-// for iOS compatability with nav menus
-$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
-
-$(document).ready(function () {
-    $('#menuHome').click();
-});
+$(document).ready(newModel);
 
 // Global Variables
 var fileSep = "/";
@@ -25,6 +13,7 @@ var descriptionDir = "./descriptions";
 var fileId = [];
 var fileCount = 0;
 var ds = [];
+var fileEntry = null;
 
 var glpColKind = [];
 glpColKind[GLP_CV] = 'Real';
@@ -67,9 +56,9 @@ console.log('Initialize edit pane.');
 
 // attach CodeMirror to the textarea 'editor'
 var modelEditor = CodeMirror.fromTextArea(document.getElementById("editor"), {
-    lineNumbers: true,
-    lineWrapping: true,
-    mode: 'mathprog'
+  lineNumbers: true,
+  lineWrapping: true,
+  mode: 'mathprog'
 });
 modelEditor.markClean();
 
@@ -84,16 +73,26 @@ $(modelEditor.getWrapperElement()).resizable({
 // other initializations
 $('#modalAbout').modal({show:false});
 $('#modalConfirmClearAll').modal({show:false});
+$('#btnModalConfirmClearAll').click(function () {});
 
-$('#btnClearAll').tooltip();
+$('#menuNew').click(newModel);
+$('#menuOpen').click(openModel);
+$('#menuSave').click(saveModel);
+$('#menuSaveAs').click(saveModelAs);
+
+$('#menuAbout').click(function () {
+    $('#modalAbout').modal({show:true});
+});
+
+$('#btnNewModel').tooltip();
 $('#btnOpenModel').tooltip();
 $('#btnSaveModel').tooltip();
-$('#btnSolve').tooltip();
+$('#btnSolveModel').tooltip();
 
-$('#btnClearAll').click(clearAll);
+$('#btnNewModel').click(newModel);
 $('#btnOpenModel').click(openModel);
 $('#btnSaveModel').click(saveModel);
-$('#btnSolve').click(solve);
+$('#btnSolveModel').click(solve);
 
 /**********************************************************************
  load example files
@@ -113,6 +112,7 @@ function loadEx(descriptionFile,modelFile) {
     if (modelEditor.isClean()) {
         loadModel(modelFile);
         loadDescription(descriptionFile);
+        fileEntry = null;
     } else {
         modalCallback = function() {
             modelEditor.markClean();
@@ -136,7 +136,7 @@ function loadDescription(filename) {
 
 // load model file into editor
 function loadModel(filename) {
-    filename = filename || '';
+    filename = filename || '&nbsp;';
     if (filename) {
         if (modelEditor.isClean()) {
            $.get(exampleDir + fileSep + filename, function(data) {
@@ -168,6 +168,22 @@ function formatNumber(num,sig){
     if (arguments.length < 2) {sig = 5;}
     if (num.toPrecision(sig) == num) {return num.toString();}
     return num.toPrecision(sig).toString();
+}
+
+function errorHandler(e) {
+    console.dir(e);
+    var msg;
+    if (e.target && e.target.error)
+        e = e.target.error;
+    if (e.message)
+        msg = e.message;
+    else if (e.name)
+        msg = e.name;
+    else if (e.code)
+        msg = "Code " + e.code;
+    else
+        msg = e.toString();
+    displayInfo('Error: ' + msg);
 }
 
 /**********************************************************************
@@ -261,7 +277,8 @@ function clearMessage() {
     $('#message').removeClass('alert-warning');
     $('#message').removeClass('alert-error');
     $('#message').removeClass('alert-info');
-    $('#message').css('visibility','hidden');
+    $('#message').html('&nbsp;');
+ /*   $('#message').css('visibility','hidden'); */
 }
 
 /**********************************************************************
@@ -312,70 +329,94 @@ function clearDashboard (){
 }
 $('.dashboardCell').css('text-align','right');
 
-console.log('Setup Menus.');
-
 // open menu links w/ rel="external" in new windows to avoid losing edits
 $('a[rel="external"]').click(function() {
     $(this).attr('target','_blank');
 });
 
-$('#menuNew').click(function() {
-    clearAll();
-});
-
-function loadEditor(fileName,text) {
-    modelEditor.setValue(text);
-    modelEditor.markClean();
-    $('#modelFileName').html(fileName);
-    clearOutput();
+function openFileInEditor () {
+  chrome.fileSystem.chooseEntry(
+    {type: 'openFile'},
+      function(fe) {
+        if (fe) {
+          fileEntry = fe;
+          fe.file(function(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+              modelEditor.setValue(e.target.result);
+              modelEditor.markClean();
+              $('#modelFileName').html(fe.name);
+              clearOutput();
+              };
+             reader.readAsText(file);
+          },
+          errorHandler
+        );
+      }
+    }
+  );
 }
 
-var fileEntry;
+function openModel () {
+  if (modelEditor.isClean()) {
+    openFileInEditor();
+  } else {
+    $('#btnModalConfirmClearAll').click(openFileInEditor);
+    $('#modalConfirmClearAll').modal({show: true});
+  }
+}
 
-function openFileInEditor () {
+
+function save () {
+  fileEntry.createWriter(
+    function(fileWriter) {
+      fileWriter.onerror = errorHandler;
+      fileWriter.onwrite = function(e) {
+        fileWriter.onwrite = function(e) {
+          displayInfo('Saved OK');
+          modelEditor.markClean();
+        };
+        var blob = new Blob([modelEditor.getValue()],
+          {type: 'text/plain'});
+        fileWriter.write(blob);
+      };
+      fileWriter.truncate(0);
+    },
+    errorHandler
+  );
+}
+
+function saveModel() {
+  displayInfo('Saving File');
+  if (fileEntry)
+    save();
+  else 
     chrome.fileSystem.chooseEntry(
-        {type: 'openFile'},
-        function(fe) {
-            fileEntry = fe;
-            fe.file(function(file) {
-                var reader = new FileReader();
-                reader.onload = function(e) {
-                    loadEditor(fe.name,e.target.result);
-                };
-                reader.readAsText(file);
-            },
-            function() {
-              console.log('Error reading file.');
-            });
+      {type: 'saveFile'},
+      function(fe) {
+        if (fe) {
+          fileEntry = fe;
+          save();
         }
+      }
     );
 }
 
+function saveModelAs() {
+  fileEntry = null;
+  saveModel();
+}
 
-$('#menuOpen').click(function() {
-    if (modelEditor.isClean()) {
-        openFileInEditor();
-    } else {
-        $('#btnModalConfirmClearAll').click(openFileInEditor);
-        $('#modalConfirmClearAll').modal({show: true});
-    }
-});
-
-
-// menu item About...
-$('#menuAbout').click(function () {
-    $('#modalAbout').modal({show:true});
-});
-
-function clearAll() {
+function newModel() {
     if (modelEditor.isClean()) {
         loadEx('_blank.html','untitled.mod');
         clearData();
+        fileEntry = null;
     } else {
-        modalCallback = function () {
+        $('#btnModalConfirmClearAll').click(function() {
             modelEditor.markClean();
-            clearAll();
-        };
+            newModel();
+        });
         $('#modalConfirmClearAll').modal({show: true});
     }
 }
@@ -383,12 +424,10 @@ function clearAll() {
 function clearOutput() {
     clearMessage();
     clearDashboard();
-    $('#variableFilterDiv').html('');
     $('#variableTableDiv').html('');
-    $('#constraintFilterDiv').html('');
     $('#constraintTableDiv').html('');
-    $('#outputTab').html('');
-    $('#logContent').text('');
+    $('#outputTab').html('&nbsp;');
+    $('#logContent').text('&nbsp;');
 }
 
 function clearData() {
@@ -398,88 +437,10 @@ function clearData() {
     ds = [];
 }
 
-function openModel() {
-    if (modelEditor.isClean()) {
-        filepicker.setKey('AIdU1Voz7RN686Gcu3kNEz');
-        filepicker.pick({
-                container: 'modal',
-                services: ['COMPUTER','BOX','DROPBOX','GOOGLE_DRIVE','URL']
-            },
-            function(FPFile) {
-                filepicker.read(FPFile, function(data) {
-                    loadDescription('_blank.html');
-                    modelEditor.setValue(data);
-                    modelEditor.markClean();
-                    $('#modelFileName').html(FPFile.filename);
-                    clearOutput();
-                });
-            },
-            function(FPError) {
-                console.log(FPError.toString());
-            }
-        );
-    } else {
-        modalCallback = function () {
-            modelEditor.markClean();
-            openModel();
-        };
-        $('#modalConfirmClearAll').modal({show: true});
-    }
-}
-
-function saveModel() {
-    filepicker.setKey('AIdU1Voz7RN686Gcu3kNEz');
-    filepicker.store(modelEditor.getValue(), {
-            filename: 'tmp.mod',
-            mimetype: 'text/plain',
-            location: 'S3'
-        },
-        // If store is successful then export file
-        function(FPFileS3) {
-            filepicker.exportFile(FPFileS3, {
-                mimetype: 'text/*',
-                container: 'modal',
-                services: ['COMPUTER','BOX','DROPBOX','GOOGLE_DRIVE'],
-                suggestedFilename: $('#modelFileName').html()
-            },
-            // If export succeeds
-            function(FPFile) {
-                filepicker.remove(FPFileS3);
-                $('#modelFileName').html(FPFile.filename);
-                modelEditor.markClean();
-            },
-            // If export fails
-            function(FPFile) {
-                filepicker.remove(FPFileS3);
-                console.log(FPError.toString());
-            });
-        },
-        function(FPError) {
-            console.log(FPError.toString());
-        }
-    );
-}
-
-// button Upload...
-$('#files').on('change', function (evt) {
-    var files = evt.target.files;
-    var file = files[0];
-    var reader = new FileReader();
-    reader.onload = function(){
-        modelEditor.setValue(this.result);
-        $('#modelFileName').html(file.name);
-    };
-    reader.readAsText(file);
-});
-
-// button modal Confirm Clear All
-$('#btnModalConfirmClearAll').click(function () {
-    modalCallback();
-});
 
 // LP/LP+MIP radio buttons
 function isMIP () {
-     return $('#btnSolveMIP').is('.active') && (glp_get_num_int(lp) > 0);
+     return (glp_get_num_int(lp) > 0);
 }
 
 /**********************************************************************
