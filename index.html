@@ -127,220 +127,208 @@
   <div id='container'>
 
     <!-- Navigation Menu Bar -->
-    <nav class="navbar navbar-fixed-top navbar-inverse">
+    <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
       <div class="container-fluid" style="background:#003b7b;">
-        <div class="container" style="float:left;">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#" style="color:#ffffff;">MathProg Solver</a>
-          </div>
-                    <!-- Models menu -->
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="background: #003b7b; color: #dddddd;">Model<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#" id="menuNew">New</a></li>
-                                <li><a href="#" id="menuOpen">Open ...</a></li>
-                                <li><a href="#" id="menuSave">Save</a></li>
-                                <li><a href="#" id="menuSaveAs">Save As ...</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <!-- Examples menu -->
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="background:#003b7b;color: #dddddd;">Examples<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-submenu">
-                                    <a href="#">MathProg Basics <span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href='#' class="example" id="HelloWorld">Hello, World</a></li>
-                                        <li><a href='#' class="example" id="lpTwoVars">Linear Program in Two Variables</a></li>
-                                        <li><a href='#' class="example" id="linearEqns">Linear Equations</a></li>
-                                        <li><a href='#' class="example" id="Sets">Sets</a></li>
-                                        <li><a href='#' class="example" id="Parameters">Parameters</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <!-- MathProg Resources menu -->
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #dddddd;">Resources<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a rel="external" href = 'https://github.com/jckantor/MathProg-Solver/blob/master/glpk-4.60/doc/gmpl.pdf'>GNU MathProg Reference</a></li>
-                                <li><a rel="external" href = 'http://en.wikibooks.org/wiki/GLPK/GMPL_(MathProg)'>MathProg Wikibook</a></li>
-                                <li><a rel="external" href = 'http://www.ampl.com/BOOK/download.html'>AMPL Book</a></li>
-                                <li><a rel="external" href = 'http://iuuk.mff.cuni.cz/~bohm/texts/mathprog_intro.html'>MathProg in 60</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <!-- About... menu -->
-                    <ul class="nav navbar-nav">
-                        <li class="active">
-                            <a id='menuAbout' href="#" style="background: #003b7b; color: #dddddd;">About...</a>
-                        </li>
-                    </ul>
-                </div>
-                
-                <!-- Old Menus -->
-                <div class="container" style="float:left;">
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            
-                            <!-- Examples menu -->
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #dddddd;">Examples<b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-submenu">
-                                        <a href="#">MathProg Basics</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' class="example" id="HelloWorld">Hello, World</a></li>
-	                                        <li><a href='#' class="example" id="lpTwoVars">Linear Program in Two Variables</a></li>
-	                                        <li><a href='#' class="example" id="linearEqns">Linear Equations</a></li>
-                                            <li><a href='#' class="example" id="Sets">Sets</a></li>
-                                            <li><a href='#' class="example" id="Parameters">Parameters</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href="#">Tables and Charts</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' class="example" id="ChartTools">Google Charts</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Mixture Problems</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' class="example" id="giapetto">Giapetto's Workshop</a></li>
-                                            <li><a href='#' class="example_glpk" id="plan">GLPK/plan.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="stigler">GLPK/stigler.mod</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Scheduling</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' class="example" id="ProjectCPM">Project Management with CPM</a></li>
-                                            <li><a href='#' class="example" id="Bottleneck">Machine Bottleneck</a></li>
-                                            <li><a href='#' class="example" id="JobShop">Job Shop Scheduling</a></li>
-                                            <li><a href='#' class="example" id="TaskOrder">Linear Ordering of Tasks</a></li>
-                                            <li><a href='#' class="example" id="JesuitVols">Jesuit Volunteers Corps</a></li>
-                                            <li><a href='#' class="example_glpk" id="cpp">GLPK/cpp.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="jssp">GLPK/jssp.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="shiftcover">GLPK/shiftcover.mod</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Transportation/Assignment</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' class="example" id="TransportNet">Transportation Network</a></li>
-                                            <li><a href='#' class="example" id="StockCutting">Stock Cutting</a></li>
-                                            <li><a href='#' class="example" id="TableSeating">Table Seating</a></li>
-                                            <li><a href='#' class="example_glpk" id="assign">GLPK/assign.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="fctp">GLPK/fctp.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="gap">GLPK/gap.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="train">GLPK/train.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="transp">GLPK/transp.mod</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Route Optimization</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' class="example" id="tsptw">Traveling Salesman with Time Windows</a></li>
-                                            <li><a href='#' class="example" id="vrp">Vehicle Routing</a></li>
-                                            <li><a href='#' class="example" id="vrptw">Vehicle Routing with Time Windows</a></li>
-                                            <li><a href='#' class="example_glpk" id="tsp">GLPK/tsp.mod</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Stochastic Programming</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' class="example" id="Newsvendor">Newsvendor Problem</a></li>
-                                            <li><a href='#' class="example" id="PlantExpansion">Scenario Analysis for a Plant Expansion</a></li>
-                                            <li><a href='#' class="example" id="RNGambling">Stochastic Dynamic Programming: Risk Neutral Gambler</a></li>
-                                            <li><a href='#' class="example" id="RAGambling">Stochastic Dynamic Programming: Risk Averse Gambler</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href='#'>Engineering</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' class="example" id="DataReconciliation">Data Reconciliation</a></li>
-                                            <li><a href='#' class="example" id="Solvay">Generation/Consumption Analysis</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Finance</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' class="example" id="retirement">Saving for Retirement</a></li>
-                                            <li><a href='#' class="example" id="PortfolioMAD">Portfolio Optimization (MAD)</a></li>
-                                            <li><a href='#' class="example" id="AmericanCall">American Call Option</a></li>
-                                            <li><a href='#' class="example" id="AmericanPut">American Put Option</a></li>
-                                            <li><a href='#' class="example" id="EuropeanCall">European Call Option</a></li>
-                                            <li><a href='#' class="example" id="EuropeanPut">European Put Option</a></li>
-                                            <li><a href='#' class="example" id="PoliticalArb">Arbitrage in Political Markets</a></li>
-                                            <li><a href='#' class="example" id="RiskNeutralAI">Risk Neutral Probabilities for American Idol</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Puzzles</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' class="example_glpk" id="crypto">GLPK/crypto.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="magic">GLPK/magic.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="money">GLPK/money.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="queens">GLPK/queens.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="shikaku">GLPK/shikaku</a></li>
-                                            <li><a href='#' class="example_glpk" id="sudoku">GLPK/sudoku</a></li>
-                                            <li><a href='#' class="example_glpk" id="zebra">GLPK/zebra</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Advanced Techniques</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' class="example" id="MVNormal">Sampling a Multivariate Normal Distribution</a></li>
-                                            <li><a href='#' class="example" id="PiecewiseLinearInterpolation">Piecewise Linear Interpolation</a></li>
-                                            <li><a href='#' class="example" id="Sorting">Sorting</a></li>
-                                            <li><a href='#' class="example_glpk" id="sorting">GLPK/sorting.mod</a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a href = '#'>Other GLPK Examples</a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href='#' class="example_glpk" id="bpp">bpp.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="cal">cal.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="cf12a">cf12a.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="cf12b">cf12b.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="cflsq">cflsq.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="color">color.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="dea">dea.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="egypt">egypt.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="food">food.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="food2">food2.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="graph">graph.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="maxcut">maxcut.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="maxflow">maxflow.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="mfasp">mfasp.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="mfvsp">mfvsp.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="min01ks">min01ks.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="misp">misp.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="mvcp">mvcp.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="prod">prod.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="qfit">qfit.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="sat">sat.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="spp">spp.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="todd">todd.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="xyacfs">xyacfs.mod</a></li>
-                                            <li><a href='#' class="example_glpk" id="yacfs">yacfs.mod</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#" style="color:#ffffff;">MathProg Solver</a>
+        </div>
+
+        <!-- Models menu -->
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" style="background: #003b7b; color: #dddddd;">Model <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#" id="menuNew">New</a></li>
+              <li><a href="#" id="menuOpen">Open ...</a></li>
+              <li><a href="#" id="menuSave">Save</a></li>
+              <li><a href="#" id="menuSaveAs">Save As ...</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <!-- Examples menu -->
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" style="background:#003b7b;color: #dddddd;">Examples <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              
+              <li class="dropdown-submenu">
+                <a href="#">MathProg Basics <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href='#' class="example" id="HelloWorld">Hello, World</a></li>
+                  <li><a href='#' class="example" id="lpTwoVars">Linear Program in Two Variables</a></li>
+                  <li><a href='#' class="example" id="linearEqns">Linear Equations</a></li>
+                  <li><a href='#' class="example" id="Sets">Sets</a></li>
+                  <li><a href='#' class="example" id="Parameters">Parameters</a></li>
+                </ul>
+              </li>
+              
+              <li class="dropdown-submenu">
+                <a href="#">Tables and Charts <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href='#' class="example" id="ChartTools">Google Charts</a></li>
+                </ul>
+              </li>
 
 
+              <li class="dropdown-submenu">
+                <a href = '#'>Mixture Problems <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href='#' class="example" id="giapetto">Giapetto's Workshop</a></li>
+                  <li><a href='#' class="example_glpk" id="plan">GLPK/plan.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="stigler">GLPK/stigler.mod</a></li>
+                </ul>
+              </li>
 
-                        </ul> <!-- end of top level menus -->
-                    </div> <!--/.nav-collapse -->
-                </div> <!-- /.container -->
-             </div> <!-- /.navbar-inner -->
-        </nav> <!-- /.navbar--> 
+              <li class="dropdown-submenu">
+                <a href = '#'>Scheduling <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href='#' class="example" id="ProjectCPM">Project Management with CPM</a></li>
+                  <li><a href='#' class="example" id="Bottleneck">Machine Bottleneck</a></li>
+                  <li><a href='#' class="example" id="JobShop">Job Shop Scheduling</a></li>
+                  <li><a href='#' class="example" id="TaskOrder">Linear Ordering of Tasks</a></li>
+                  <li><a href='#' class="example" id="JesuitVols">Jesuit Volunteers Corps</a></li>
+                  <li><a href='#' class="example_glpk" id="cpp">GLPK/cpp.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="jssp">GLPK/jssp.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="shiftcover">GLPK/shiftcover.mod</a></li>
+                </ul>
+              </li>
+              
+              <li class="dropdown-submenu">
+                <a href = '#'>Transportation/Assignment <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href='#' class="example" id="TransportNet">Transportation Network</a></li>
+                  <li><a href='#' class="example" id="StockCutting">Stock Cutting</a></li>
+                  <li><a href='#' class="example" id="TableSeating">Table Seating</a></li>
+                  <li><a href='#' class="example_glpk" id="assign">GLPK/assign.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="fctp">GLPK/fctp.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="gap">GLPK/gap.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="train">GLPK/train.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="transp">GLPK/transp.mod</a></li>
+                </ul>
+              </li>
+                                    
+              <li class="dropdown-submenu">
+                <a href = '#'>Route Optimization <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href='#' class="example" id="tsptw">Traveling Salesman with Time Windows</a></li>
+                  <li><a href='#' class="example" id="vrp">Vehicle Routing</a></li>
+                  <li><a href='#' class="example" id="vrptw">Vehicle Routing with Time Windows</a></li>
+                  <li><a href='#' class="example_glpk" id="tsp">GLPK/tsp.mod</a></li>
+                </ul>
+              </li>
+
+              <li class="dropdown-submenu">
+                <a href = '#'>Stochastic Programming <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href='#' class="example" id="Newsvendor">Newsvendor Problem</a></li>
+                  <li><a href='#' class="example" id="PlantExpansion">Scenario Analysis for a Plant Expansion</a></li>
+                  <li><a href='#' class="example" id="RNGambling">Stochastic Dynamic Programming: Risk Neutral Gambler</a></li>
+                  <li><a href='#' class="example" id="RAGambling">Stochastic Dynamic Programming: Risk Averse Gambler</a></li>
+                </ul>
+              </li>
+              
+              <li class="dropdown-submenu">
+                <a href='#'>Engineering <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href='#' class="example" id="DataReconciliation">Data Reconciliation</a></li>
+                  <li><a href='#' class="example" id="Solvay">Generation/Consumption Analysis</a></li>
+                </ul>
+              </li>
+              
+              <li class="dropdown-submenu">
+                <a href = '#'>Finance <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href='#' class="example" id="retirement">Saving for Retirement</a></li>
+                  <li><a href='#' class="example" id="PortfolioMAD">Portfolio Optimization (MAD)</a></li>
+                  <li><a href='#' class="example" id="AmericanCall">American Call Option</a></li>
+                  <li><a href='#' class="example" id="AmericanPut">American Put Option</a></li>
+                  <li><a href='#' class="example" id="EuropeanCall">European Call Option</a></li>
+                  <li><a href='#' class="example" id="EuropeanPut">European Put Option</a></li>
+                  <li><a href='#' class="example" id="PoliticalArb">Arbitrage in Political Markets</a></li>
+                  <li><a href='#' class="example" id="RiskNeutralAI">Risk Neutral Probabilities for American Idol</a></li>
+                </ul>
+              </li>
+              
+              <li class="dropdown-submenu">
+                <a href = '#'>Puzzles <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href='#' class="example_glpk" id="crypto">GLPK/crypto.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="magic">GLPK/magic.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="money">GLPK/money.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="queens">GLPK/queens.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="shikaku">GLPK/shikaku</a></li>
+                  <li><a href='#' class="example_glpk" id="sudoku">GLPK/sudoku</a></li>
+                  <li><a href='#' class="example_glpk" id="zebra">GLPK/zebra</a></li>
+                </ul>
+              </li>
+              
+              <li class="dropdown-submenu">
+                <a href = '#'>Advanced Techniques <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href='#' class="example" id="MVNormal">Sampling a Multivariate Normal Distribution</a></li>
+                  <li><a href='#' class="example" id="PiecewiseLinearInterpolation">Piecewise Linear Interpolation</a></li>
+                  <li><a href='#' class="example" id="Sorting">Sorting</a></li>
+                  <li><a href='#' class="example_glpk" id="sorting">GLPK/sorting.mod</a></li>
+                </ul>
+              </li>
+              
+              <li class="dropdown-submenu">
+                <a href = '#'>Other GLPK Examples <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href='#' class="example_glpk" id="bpp">bpp.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="cal">cal.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="cf12a">cf12a.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="cf12b">cf12b.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="cflsq">cflsq.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="color">color.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="dea">dea.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="egypt">egypt.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="food">food.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="food2">food2.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="graph">graph.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="maxcut">maxcut.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="maxflow">maxflow.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="mfasp">mfasp.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="mfvsp">mfvsp.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="min01ks">min01ks.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="misp">misp.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="mvcp">mvcp.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="prod">prod.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="qfit">qfit.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="sat">sat.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="spp">spp.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="todd">todd.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="xyacfs">xyacfs.mod</a></li>
+                  <li><a href='#' class="example_glpk" id="yacfs">yacfs.mod</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <!-- MathProg Resources menu -->
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+            <a href="#" style="color: #dddddd;">Resources <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a rel="external" href = 'https://github.com/jckantor/MathProg-Solver/blob/master/glpk-4.60/doc/gmpl.pdf'>GNU MathProg Reference</a></li>
+              <li><a rel="external" href = 'http://en.wikibooks.org/wiki/GLPK/GMPL_(MathProg)'>MathProg Wikibook</a></li>
+              <li><a rel="external" href = 'http://www.ampl.com/BOOK/download.html'>AMPL Book</a></li>
+              <li><a rel="external" href = 'http://iuuk.mff.cuni.cz/~bohm/texts/mathprog_intro.html'>MathProg in 60</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <!-- About... menu -->
+        <ul class="nav navbar-nav">
+          <li class="active">
+            <a id='menuAbout' href="#" style="background: #003b7b; color: #dddddd;">About...</a>
+          </li>
+        </ul>
+
+      </div> <!-- /.navbar-inner -->
+    </nav> <!-- /.navbar--> 
 
         <div id='content' style="padding-top: 40px;">
 
