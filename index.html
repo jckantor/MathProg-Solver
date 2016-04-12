@@ -1,135 +1,138 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <meta http-equiv='Content-Type' content='text/html' charset='UTF-8' />
-    <title>MathProg</title>
-    <style>
-	      html, body {
-	          width: 100%;
-	          height: 100%;
-	          overflow: hidden;
-	      }
-	      #container {
-	          position: absolute;
-	          top: 0;
-	          bottom: 0;
-	          left: 0;
-	          right: 0;
-            overflow: scroll;
-        }
-        table, th,td { font-size: 13px;}
-        td { width: auto; min-width: 200px;}
-        td+td { min-width: 50px; width: auto; }
-        .mathprog, .exercise { visibility: hidden; display: none; }
-        #container { margin: auto; }
-        #instructionContent {width: 100%;}
-        #linkTextArea {height: 80px; width: 490px;}
-        #content{ clear: left; width: 750; padding-top: 0px; padding-left: 15px; padding-right: 15px; }
-        #footer { float: left; padding-left: 20px;}
-        #output { font-family: Consolas, Monaco, "Courier New", monospace; font-size: 13px; width: 100%; }
-        #log { font-family: Consolas, Monaco, "Courier New", monospace; font-size: 13px; width: 100%; }
-    </style>
-    <script src="libs/jQuery/2.2.3/jquery-2.2.3.min.js"></script>
-    <script src="libs/jQuery-UI/1.11.4/jquery-ui.min.js"></script>
-    <link href="libs/jQuery-UI/1.11.4/jquery-ui.css" rel="stylesheet">
-    <script src="libs/Bootstrap/3.3.4/bootstrap.min.js"></script>
-    <link href="libs/Bootstrap/3.3.4/bootstrap.min.css" rel="stylesheet">
-    <style>
-        pre {
-            font-family: Consolas, Monoco, "Courier New"; 
-            font-size: 13px;
-			      line-height: 1.45em;
-        }
-    </style>
-    <script src="libs/CodeMirror/5.13.4/codemirror.min.js"></script>
-    <link href="libs/CodeMirror/5.13.4/codemirror.min.css" rel="stylesheet" >
-    <script src="libs/CodeMirror/codemirror_mathprog.js"></script>
-    <style>
-        .CodeMirror {
-            font-size: 13px;
-            font-family: Consolas, Monaco,"Courier New", monospace;
-            line-height: 1.45em;
-            width: 100%;
-            margin: 0px;
-            border: solid 1px;
-        }
-    </style>
-    <link href="libs/KaTeX/0.5.1/katex.min.css" rel="stylesheet" >
-    <script src="libs/KaTeX/0.5.1/katex.min.js"></script>
-    <script src="libs/KaTeX/0.5.1/auto-render.min.js"></script>
-    <script src="libs/filepicker.js"></script>
-    <script src="libs/jsapi.js"></script>
-    <script src='libs/glpk.min.js'></script>
+  <meta http-equiv='Content-Type' content='text/html' charset='UTF-8' />
+  <title>MathProg</title>
+  <style>
+	  html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    #container {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      overflow: scroll;
+    }
+    table, th,td { font-size: 13px;}
+    td { width: auto; min-width: 200px;}
+    td+td { min-width: 50px; width: auto; }
+    .mathprog, .exercise { visibility: hidden; display: none; }
+    #container { margin: auto; }
+    #instructionContent {width: 100%;}
+    #linkTextArea {height: 80px; width: 490px;}
+    #content{ clear: left; width: 750; padding-top: 0px; padding-left: 15px; padding-right: 15px; }
+    #footer { float: left; padding-left: 20px;}
+    #output { font-family: Consolas, Monaco, "Courier New", monospace; font-size: 13px; width: 100%; }
+    #log { font-family: Consolas, Monaco, "Courier New", monospace; font-size: 13px; width: 100%; }
+  </style>
+  <script src="libs/jQuery/2.2.3/jquery-2.2.3.min.js"></script>
+  <script src="libs/jQuery-UI/1.11.4/jquery-ui.min.js"></script>
+  <link href="libs/jQuery-UI/1.11.4/jquery-ui.css" rel="stylesheet">
+  <script src="libs/Bootstrap/3.3.4/bootstrap.min.js"></script>
+  <script src="libs/smartmenus-1.0.0/jquery.smartmenus.min.js"></script>
+  <script src="libs/smartmenus-1.0.0/addons/bootstrap/jquery.smartmenus.bootstrap.min.js"></script>
+  <link href="libs/Bootstrap/3.3.4/bootstrap.min.css" rel="stylesheet">
+  <link href="libs/smartmenus-1.0.0/addons/bootstrap/jquery.smartmenus.bootstrap.css" rel="stylesheet">
+  <style>
+    pre {
+      font-family: Consolas, Monoco, "Courier New"; 
+      font-size: 13px;
+			line-height: 1.45em;
+    }
+  </style>
+  <script src="libs/CodeMirror/5.13.4/codemirror.min.js"></script>
+  <link href="libs/CodeMirror/5.13.4/codemirror.min.css" rel="stylesheet" >
+  <script src="libs/CodeMirror/codemirror_mathprog.js"></script>
+  <style>
+    .CodeMirror {
+      font-size: 13px;
+      font-family: Consolas, Monaco,"Courier New", monospace;
+      line-height: 1.45em;
+      width: 100%;
+      margin: 0px;
+      border: solid 1px;
+    }
+  </style>
+  <link href="libs/KaTeX/0.5.1/katex.min.css" rel="stylesheet" >
+  <script src="libs/KaTeX/0.5.1/katex.min.js"></script>
+  <script src="libs/KaTeX/0.5.1/auto-render.min.js"></script>
+  <script src="libs/filepicker.js"></script>
+  <script src="libs/jsapi.js"></script>
+  <script src='libs/glpk.min.js'></script>
 </head>
 
 <body>
 
-    <!-- modal About... -->
-    <div id="modalAbout" class="modal" role="dialog">
-        <div class="modal-dialog">
-            <div class="model-content"  style="background: #fff; border-radius:20px;">
-                <div class="modal-header" style="padding-top: 10px;">
-                    <h3>About ...</h3>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        <b>MathProg Solver</b> is a Chrome application for linear and discrete optimization
-	                      in GNU MathProg, the modeling language of the open source GLPK project.
-                        The syntax is similar to <a href = "http://www.ampl.com/" target = '_blank'>AMPL</a>.
-                        Calculations are performed in the App using the glpk.js solver.
-                    </p>
-                    <p>
-                        The application uses code from a number of open source projects including
-                    </p>
-                    <ul>
-                        <li> <a href = 'http://www.gnu.org/software/glpk/' target = '_blank'>GNU GLPK project</a></li>
-                        <li> <a href = 'https://github.com/hgourvest/glpk.js' target = '_blank'>glpk.js</a></li>
-                        <li> <a href = 'http://jquery.com/' target = '_blank'>jQuery</a></li>
-                        <li> <a href = 'http://twitter.github.com/bootstrap/' target = '_blank'>Bootstrap</a></li>
-                        <li> <a href = 'https://khan.github.io/KaTeX/' target = '_blank'>KaTeX</a></li>
-                    </ul>
-                    <p>
-                        See the <a href = "https://github.com/jckantor/MathProg-Solver" target="_blank">MathProg 
-                        Solver Github repository</a> for additional documentation and complete source code.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary" data-dismiss="modal">Close</button>
-                </div>
-             </div>
+  <!-- modal About... -->
+  <div id="modalAbout" class="modal" role="dialog">
+    <div class="modal-dialog">
+      <div class="model-content"  style="background: #fff; border-radius:20px;">
+        <div class="modal-header" style="padding-top: 10px;">
+          <h3>About ...</h3>
         </div>
-    </div>
-
-    <!-- modal Confirm Clear All -->
-    <div id="modalConfirmClearAll" class="modal" role="dialog">
-        <dif class="modal-dialog">
-            <div class="modal-content" style="width: 75%; background: #fff; border-radius:20px;">
-                <div class="modal-header" style="padding-top: 10px;">
-                    <h3>You have unsaved changes ...</h3>
-                </div>
-                <div class="modal-body">
-                    <p>
-                        Confirm you wish to clear the editor and lose unsaved changes.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button id='btnModalConfirmClearAll' class="btn" data-dismiss="modal" style='margin-right:100px;'>Do Not Save Changes</button>
-                    <button class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                </div>
-            </div>
+        <div class="modal-body">
+          <p>
+            <b>MathProg Solver</b> is a Chrome application for linear and discrete optimization
+	          in GNU MathProg, the modeling language of the open source GLPK project.
+            The syntax is similar to <a href = "http://www.ampl.com/" target = '_blank'>AMPL</a>.
+            Calculations are performed in the App using the glpk.js solver.
+          </p>
+          <p>
+            The application uses code from a number of open source projects including
+          </p>
+          <ul>
+            <li> <a href = 'http://www.gnu.org/software/glpk/' target = '_blank'>GNU GLPK project</a></li>
+            <li> <a href = 'https://github.com/hgourvest/glpk.js' target = '_blank'>glpk.js</a></li>
+            <li> <a href = 'http://jquery.com/' target = '_blank'>jQuery</a></li>
+            <li> <a href = 'http://twitter.github.com/bootstrap/' target = '_blank'>Bootstrap</a></li>
+            <li> <a href = 'https://khan.github.io/KaTeX/' target = '_blank'>KaTeX</a></li>
+          </ul>
+          <p>
+            See the <a href = "https://github.com/jckantor/MathProg-Solver" target="_blank">MathProg 
+            Solver Github repository</a> for additional documentation and complete source code.
+          </p>
         </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- container -->
-    <div id='container'>
+  <!-- modal Confirm Clear All -->
+  <div id="modalConfirmClearAll" class="modal" role="dialog">
+    <dif class="modal-dialog">
+      <div class="modal-content" style="width: 75%; background: #fff; border-radius:20px;">
+        <div class="modal-header" style="padding-top: 10px;">
+            <h3>You have unsaved changes ...</h3>
+        </div>
+        <div class="modal-body">
+          <p>
+            Confirm you wish to clear the editor and lose unsaved changes.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button id='btnModalConfirmClearAll' class="btn" data-dismiss="modal" style='margin-right:100px;'>Do Not Save Changes</button>
+          <button class="btn btn-primary" data-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-        <!-- Navigation Menu Bar -->
-        <nav class="navbar navbar-fixed-top navbar-inverse">
-            <div class="container-fluid" style="background:#003b7b;">
-                <div class="container" style="float:left;">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="#" style="color:#ffffff;">MathProg Solver</a>
-                    </div>
+  <!-- container -->
+  <div id='container'>
+
+    <!-- Navigation Menu Bar -->
+    <nav class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container-fluid" style="background:#003b7b;">
+        <div class="container" style="float:left;">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#" style="color:#ffffff;">MathProg Solver</a>
+          </div>
                     <!-- Models menu -->
                     <ul class="nav navbar-nav">
                         <li class="dropdown">
@@ -148,7 +151,7 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="background:#003b7b;color: #dddddd;">Examples<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li class="dropdown-submenu">
-                                    <a href="#">MathProg Basics</a>
+                                    <a href="#">MathProg Basics <span class="caret"></span></a>
                                     <ul class="dropdown-menu">
                                         <li><a href='#' class="example" id="HelloWorld">Hello, World</a></li>
                                         <li><a href='#' class="example" id="lpTwoVars">Linear Program in Two Variables</a></li>
@@ -165,7 +168,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="color: #dddddd;">Resources<span class="caret"></span></a>
                             <ul class="dropdown-menu">
-                                <li><a rel="external" href = 'https://github.com/jckantor/MathProg-Solver/blob/master/glpk-4.60/doc/gmpl.pdf'>GNU MathProg Language Reference</a></li>
+                                <li><a rel="external" href = 'https://github.com/jckantor/MathProg-Solver/blob/master/glpk-4.60/doc/gmpl.pdf'>GNU MathProg Reference</a></li>
                                 <li><a rel="external" href = 'http://en.wikibooks.org/wiki/GLPK/GMPL_(MathProg)'>MathProg Wikibook</a></li>
                                 <li><a rel="external" href = 'http://www.ampl.com/BOOK/download.html'>AMPL Book</a></li>
                                 <li><a rel="external" href = 'http://iuuk.mff.cuni.cz/~bohm/texts/mathprog_intro.html'>MathProg in 60</a></li>
