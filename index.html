@@ -17,8 +17,8 @@
       right: 0;
       overflow: scroll;
     }
-    table, th,td { font-size: 13px;}
-    td { width: auto; min-width: 200px;}
+    table, th,td { font-size: 13px; }
+    td { width: auto; min-width: 200px; }
     td+td { min-width: 50px; width: auto; }
     .mathprog, .exercise { visibility: hidden; display: none; }
     #container { margin: auto; }
@@ -27,6 +27,13 @@
     #content{ clear: left; width: 750; padding-top: 0px; padding-left: 15px; padding-right: 15px; }
     #output { font-family: Consolas, Monaco, "Courier New", monospace; font-size: 13px; width: 100%; }
     #log { font-family: Consolas, Monaco, "Courier New", monospace; font-size: 13px; width: 100%; }
+    
+    #instructionContent > h1 { font-size: 20pt; }
+    #instructionContent > h2 { font-size: 18pt; }
+    #instructionContent > h3 { font-size: 16pt; }
+    #instructionContent > h4 { font-size: 14pt; }
+    #instructionContent > h5 { font-size: 12pt; }
+    #instructionContent > h6 { font-size: 10pt; }
   </style>
   <script src="libs/jQuery/2.2.3/jquery-2.2.3.min.js"></script>
   <script src="libs/jQuery-UI/1.11.4/jquery-ui.min.js"></script>
@@ -171,13 +178,10 @@
                 </ul>
               </li>
 
-
               <li class="dropdown-submenu">
                 <a href = '#'>Mixture Problems <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                   <li><a href='#' class="example" id="giapetto">Giapetto's Workshop</a></li>
-                  <li><a href='#' class="example_glpk" id="plan">GLPK/plan.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="stigler">GLPK/stigler.mod</a></li>
                 </ul>
               </li>
 
@@ -189,9 +193,6 @@
                   <li><a href='#' class="example" id="JobShop">Job Shop Scheduling</a></li>
                   <li><a href='#' class="example" id="TaskOrder">Linear Ordering of Tasks</a></li>
                   <li><a href='#' class="example" id="JesuitVols">Jesuit Volunteers Corps</a></li>
-                  <li><a href='#' class="example_glpk" id="cpp">GLPK/cpp.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="jssp">GLPK/jssp.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="shiftcover">GLPK/shiftcover.mod</a></li>
                 </ul>
               </li>
               
@@ -201,11 +202,6 @@
                   <li><a href='#' class="example" id="TransportNet">Transportation Network</a></li>
                   <li><a href='#' class="example" id="StockCutting">Stock Cutting</a></li>
                   <li><a href='#' class="example" id="TableSeating">Table Seating</a></li>
-                  <li><a href='#' class="example_glpk" id="assign">GLPK/assign.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="fctp">GLPK/fctp.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="gap">GLPK/gap.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="train">GLPK/train.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="transp">GLPK/transp.mod</a></li>
                 </ul>
               </li>
                                     
@@ -215,7 +211,6 @@
                   <li><a href='#' class="example" id="tsptw">Traveling Salesman with Time Windows</a></li>
                   <li><a href='#' class="example" id="vrp">Vehicle Routing</a></li>
                   <li><a href='#' class="example" id="vrptw">Vehicle Routing with Time Windows</a></li>
-                  <li><a href='#' class="example_glpk" id="tsp">GLPK/tsp.mod</a></li>
                 </ul>
               </li>
 
@@ -251,18 +246,6 @@
                 </ul>
               </li>
               
-              <li class="dropdown-submenu">
-                <a href = '#'>Puzzles <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href='#' class="example_glpk" id="crypto">GLPK/crypto.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="magic">GLPK/magic.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="money">GLPK/money.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="queens">GLPK/queens.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="shikaku">GLPK/shikaku</a></li>
-                  <li><a href='#' class="example_glpk" id="sudoku">GLPK/sudoku</a></li>
-                  <li><a href='#' class="example_glpk" id="zebra">GLPK/zebra</a></li>
-                </ul>
-              </li>
               
               <li class="dropdown-submenu">
                 <a href = '#'>Advanced Techniques <span class="caret"></span></a>
@@ -270,40 +253,9 @@
                   <li><a href='#' class="example" id="MVNormal">Sampling a Multivariate Normal Distribution</a></li>
                   <li><a href='#' class="example" id="PiecewiseLinearInterpolation">Piecewise Linear Interpolation</a></li>
                   <li><a href='#' class="example" id="Sorting">Sorting</a></li>
-                  <li><a href='#' class="example_glpk" id="sorting">GLPK/sorting.mod</a></li>
                 </ul>
               </li>
               
-              <li class="dropdown-submenu">
-                <a href = '#'>Other GLPK Examples <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href='#' class="example_glpk" id="bpp">bpp.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="cal">cal.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="cf12a">cf12a.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="cf12b">cf12b.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="cflsq">cflsq.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="color">color.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="dea">dea.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="egypt">egypt.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="food">food.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="food2">food2.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="graph">graph.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="maxcut">maxcut.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="maxflow">maxflow.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="mfasp">mfasp.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="mfvsp">mfvsp.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="min01ks">min01ks.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="misp">misp.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="mvcp">mvcp.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="prod">prod.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="qfit">qfit.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="sat">sat.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="spp">spp.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="todd">todd.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="xyacfs">xyacfs.mod</a></li>
-                  <li><a href='#' class="example_glpk" id="yacfs">yacfs.mod</a></li>
-                </ul>
-              </li>
             </ul>
           </li>
         </ul>
@@ -313,7 +265,7 @@
           <li class="dropdown">
             <a href="#" style="color: #dddddd;">Resources <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a rel="external" href = 'https://github.com/jckantor/MathProg-Solver/blob/master/glpk-4.60/doc/gmpl.pdf'>GNU MathProg Reference</a></li>
+              <li><a rel="external" href = 'https://github.com/jckantor/MathProg-Solver/blob/master/libs/glpk-4.60/doc/gmpl.pdf'>GNU MathProg Reference</a></li>
               <li><a rel="external" href = 'http://en.wikibooks.org/wiki/GLPK/GMPL_(MathProg)'>MathProg Wikibook</a></li>
               <li><a rel="external" href = 'http://www.ampl.com/BOOK/download.html'>AMPL Book</a></li>
               <li><a rel="external" href = 'http://iuuk.mff.cuni.cz/~bohm/texts/mathprog_intro.html'>MathProg in 60</a></li>

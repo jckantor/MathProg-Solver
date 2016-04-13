@@ -83,9 +83,6 @@ $('#menuSaveAs').click(saveModelAs);
 $(".example").click(function() {
   openExample(exampleDir + fileSep + this.id + ".mod");
 });
-$(".example_glpk").click(function(){
-	openExample("../glpk-4.60/examples/" + this.id + ".mod");
-});
 
 $('#menuAbout').click(function () {
     $('#modalAbout').modal({show:true});
@@ -99,7 +96,7 @@ $('#btnSolveModel').tooltip();
 $('#btnNewModel').click(newModel);
 $('#btnOpenModel').click(openModel);
 $('#btnSaveModel').click(saveModel);
-$('#btnSolveModel').click(solve);
+$('#btnSolveModel').click(solveModel);
 
 /**********************************************************************
  load example files
@@ -202,6 +199,7 @@ function saveModel() {
       function(fe) {
         if (fe) {
           fileEntry = fe;
+          fileName = fe.name;
           save();
         }
       }
@@ -220,6 +218,14 @@ function save () {
       fileWriter.onwrite = function(e) {
         fileWriter.onwrite = function(e) {
           displayInfo('Saved OK');
+          $('#modelFileName').html(fileName);
+          var str = re.exec(modelEditor.getValue());
+          if (str !== null) {
+            $('#instructionContent').html(md.render(str[1]));
+            renderMathInElement(document.getElementById("instructionContent"));
+          } else {
+            $('#instructionContent').html('&nbsp;');
+          }
           modelEditor.markClean();
         };
         var blob = new Blob([modelEditor.getValue()],
@@ -232,20 +238,19 @@ function save () {
   );
 }
 
-
 /**********************************************************************
  utility functions
 **********************************************************************/
 
 // round number to a specified significant digits
 function formatNumber(num,sig){
-    if (isNaN(parseFloat(num)) || !isFinite(num)) {return num;}
-    if (Math.abs(num) <= Number.MIN_VALUE) {return '0';}
-    if (num >= Number.MAX_VALUE/10) {return '+Inf';}
-    if (num <= -Number.MAX_VALUE/10) {return '-Inf';}
-    if (arguments.length < 2) {sig = 5;}
-    if (num.toPrecision(sig) == num) {return num.toString();}
-    return num.toPrecision(sig).toString();
+  if (isNaN(parseFloat(num)) || !isFinite(num)) {return num;}
+  if (Math.abs(num) <= Number.MIN_VALUE) {return '0';}
+  if (num >= Number.MAX_VALUE/10) {return '+Inf';}
+  if (num <= -Number.MAX_VALUE/10) {return '-Inf';}
+  if (arguments.length < 2) {sig = 5;}
+  if (num.toPrecision(sig) == num) {return num.toString();}
+  return num.toPrecision(sig).toString();
 }
 
 function errorHandler(e) {
@@ -828,9 +833,10 @@ function loadJSON(arg,callback) {
  Solver
 **********************************************************************/
 
-function solve() {
+function solveModel() {
     try {
-        solveModel();
+      saveModel();
+        solve();
     } catch (err) {
         if (err instanceof MathProgError) {
             // trap table reading errors
@@ -864,7 +870,7 @@ function solve() {
     }
 }
 
-function solveModel() {
+function solve() {
     tic = Date.now();
     clearOutput();
     clearMessage();

@@ -1,6 +1,8 @@
-# Example: giapetto.mod
-#
-# Find the optimal solution maximizing Giapetto's profit
+/* 
+## Giapetto's Workshop
+
+Find the optimal solution maximizing Giapetto's profit
+*/
 
 # Decision variables
 var x1 >=0 integer;  # soldier
