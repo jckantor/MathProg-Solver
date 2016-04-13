@@ -1,3 +1,11 @@
+/* # Tuples
+
+Tuples a valuable tool for managing the relationship between multiple
+    sets as found, for example, in network and transportation problems. 
+    A surprising rich range of computations can be done with tuples and
+    set operations.
+*/
+
 # Example: Tuples.mod
 
 set ORIG2 := {'New York','Boston','Miami'};

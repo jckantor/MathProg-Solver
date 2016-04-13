@@ -1,4 +1,21 @@
-# Example: ProjectCPM.mod
+/* # Project Management with the Critical Path Method
+
+The Critical Path Method is a technique for calculating the shortest time span 
+    needed to complete a series of tasks. The tasks are represented by nodes, each 
+    labelled with the duration. The precedence order of the task is given by a set 
+    of arcs.
+
+Here we demonstrate the representation and calculation of the critical path. 
+    Decision variables are introduced for
+
+* Earliest Start
+* Earliest Finish
+* Latest Start
+* Latest Finish
+* Slack = Earliest Finish - Earliest Start = Latest Finish - Earliest  Finish
+
+Tasks on the Critical Path have zero slack.
+*/
 
 set TASKS;
 set ARCS within {TASKS cross TASKS};

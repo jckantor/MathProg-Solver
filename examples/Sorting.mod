@@ -1,4 +1,13 @@
-# Example: Sorting.mod
+/* # Sorting in MathProg
+
+MathProg is a lean language with a limited number of functions and 
+    utilities. Demonstrated below  are several techniques for sorting sets 
+    by value of parameters or decision variables. These techniques may be 
+    useful in other contexts.
+
+These ideas are attributable to xypron and Andrew Makhorin on the 
+    help-glpk mail list.
+*/
 
 set I;
 param a{I};

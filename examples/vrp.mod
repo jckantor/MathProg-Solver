@@ -1,4 +1,4 @@
-/*<h1>Vehicle Routing Problem</h1>
+/* # Vehicle Routing Problem
 
  A set of airplanes are initially distributed among a set of
  starting locations. They are to be assigned routes to collectively
@@ -14,6 +14,7 @@
  included in the list of locations).
 
  Jeffrey Kantor
+ 
  March, 2013
 */
 

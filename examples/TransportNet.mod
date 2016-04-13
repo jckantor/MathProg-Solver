@@ -1,4 +1,14 @@
-# Example: TransportNet.mod
+/* # Transportation Network
+
+This is a simple model to demonstrate modeling of a transportation 
+    network for a system with sources and destinations. The given supply and
+    demand constraints, the objective is to minimize transportation costs. 
+    This model demonstrates:
+
+* Transportation optimization.</li>
+* Factoring of applications into separate modeling and data sections.</li>
+* Use of defaults and defining sets in the data section.</li>
+*/
 
 /* Model  Section */
 

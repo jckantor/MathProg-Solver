@@ -1,4 +1,12 @@
-# Assigning members to a set
+/* # Sets
+
+Sets are a basic concept in mathematical programming languages. Sets are 
+    used to define the objects of discourse in a particular application. A 
+    convenient notation to is name sets in all caps so they are readily 
+    distinguished from variables and parameters appearing in an application.
+*/
+
+
 
 set DOGS := {'Beagle','Labrador','Shepherd','Boxer'};
 set CATS := {'Tiger','Lion'};

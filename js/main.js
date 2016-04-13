@@ -9,7 +9,6 @@ $(document).ready(newModel);
 // Global Variables
 var fileSep = "/";
 var exampleDir = "./examples";
-var descriptionDir = "./descriptions";
 var fileId = [];
 var fileCount = 0;
 var ds = [];

@@ -1,6 +1,16 @@
-# Example: TableSeating.mod
+/* # Table Seating
 
-/* 
+Problem from the lp_solve listserv, January 12, 2013
+
+> I am trying write an integer program to solve the following problem. There are 3n
+> people, who are denoted {a,b,c,...}. There are n tables and 3 people must sit at 
+> each table. There is a value associated with each pair sitting at the same table.
+> Person a and person b sitting together is represented by a binary variable
+> a_b and the value of them sitting together is vab.
+>
+> I want find an allocation of people to tables that maximizes the sum of these values,
+> that is max:+vab*a_b+vac*a_c+vad*a_d+....
+
 Be careful. The computational effort required for this prolbem grows
 quickly with N and TABLE_SIZE. Until html 5 worker threads are implemented,
 this may lock up your browser during the lengthy solution.
