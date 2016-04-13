@@ -1,4 +1,4 @@
-/* Arbitrage in Political Prediction Markets
+/* # Arbitrage in Political Prediction Markets
 
  An arbitrage is an opportunity for an investor to allocate money 
  among set of investments such that there is non-negative return for all

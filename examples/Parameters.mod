@@ -1,6 +1,4 @@
-/* Example: Parameters.mod
-
-Working with Parameters.  */
+/* # Working with Parameters */
 
 /* Define sets */
 

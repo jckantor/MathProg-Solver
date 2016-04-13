@@ -1,4 +1,16 @@
-/* Example: JobShop.mod */
+/* # Job Shop Scheduling
+
+A simple job shop consists of a set of different machines that process jobs. 
+Each job consists of series of tasks that must be completed in specified order
+on the machines. The problem is to schedule the jobs on the machines to minimize 
+makespan.
+
+Data consists of two tables. The first table is decomposition of the jobs into
+a series of tasks. Each task lists a job name, name of the required machine, 
+and task duration.  The second table list task pairs where the first task must 
+be completed before the second task can be started. This formulation is quite 
+general, but can also specify situations with no feasible solutions.
+*/
 
 /* Data Table 1. Tasks consist of Job, Machine, Dur data*/
 set TASKS dimen 2;

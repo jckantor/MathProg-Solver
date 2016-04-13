@@ -1,4 +1,9 @@
-/* Example: PlantExpansion.mod */
+/* # Scenario Analysis for a Plant Expansion
+
+Description to be written. Problem Data from Johannes Bisschop, "AIMMS 
+    Optimization Modeling", Paragon Decision Sciences, 1999.
+*/
+
 
 set PLANTS;                            # Set of plant types
 set DEMAND;                            # Demand Segments

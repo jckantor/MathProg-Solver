@@ -1,4 +1,17 @@
-# Example: lpTwoVars.mod  Solution to Linear Program in Two Variables 
+/* # Linear Program in Two Variables
+
+Write a MathProg model to find the maximum value of \(z=3x + 4y\ \ \) 
+subject to the following set of constraints
+
+    \[\begin{align}
+        x + 2y & \leq 14 \\
+        3x - y & \geq 0 \\
+        x - y & \leq 2
+    \end{align}\]
+    
+The maximum value of \(z\) is 34.  What are the corresponding values of 
+\(x\) and \(y\)? What is the minimum value of \(z\)?
+*/
 
 # Define Variables
 var x;

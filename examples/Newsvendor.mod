@@ -1,4 +1,20 @@
-# Example: Newsvendor.mod
+/* # The Newsvendor Problem
+
+The newsvendor problem is a two stage decision problem with recourse. The 
+    vendor needs to decide how much inventory to order today to fulfill an 
+    uncertain demand. The data includes the unit cost, price, and salvage value of 
+    the product being sold, and a probabilistic forecast of demand. The objective 
+    is to maximize expected profit.
+
+As shown in lecture, this problem can be solved with a plot, and the solution
+    interpreted in terms of a cumulative probability distribution. The advantage
+    of a MathProg model is that additional constraints or other criteria may be 
+    considered, such as risk aversion.
+
+There is an extensive literature on the newsvendor problem which has been 
+    studied since at least 1888. See 
+    <a rel="external" href="http://www.isye.umn.edu/courses/ie5551/additional%20materials/newsvendort.pdf">here</a> for a thorough discussion.
+*/
 
 /* Unit Price Data */
 param r >= 0;                              # Price
