@@ -98,29 +98,78 @@ $('#btnSolveModel').click(solve);
  load example files
 **********************************************************************/
 
-$(".example").click(function(){
+
+
+
+/*
+function loadDescription(filename) {
+  filename = filename || '';
+  filename = "aaa.mod";
+  if (filename) {
+  $.get(exampleDir + fileSep + filename).done(function(data) {
+            $('#instructionContent').html(data.match(re));
+            renderMathInElement(document.getElementById("instructionContent"));
+        }).fail(function(){
+            $('#instructionContent').empty();
+		  });
+    }
+
+}
+
+*/
+
+/* $(".example").click(function(){
 	var id = this.id;
-	loadEx(id + ".html", id + ".mod");
+	loadExample(id + ".html", id + ".mod");
 });
 
 $(".example_glpk").click(function(){
 	var id = this.id;
-	loadEx("glpk.html", "../glpk-4.60/examples/" + id + ".mod");
+	loadExample("glpk.html", "../glpk-4.60/examples/" + id + ".mod");
+});
+*/
+
+re = RegExp("/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*/");
+
+$(".example").click(function() {
+  loadExample(exampleDir + fileSep + this.id + ".mod");
 });
 
-function loadEx(descriptionFile,modelFile) {
-    if (modelEditor.isClean()) {
-        loadModel(modelFile);
-        loadDescription(descriptionFile);
-        fileEntry = null;
-    } else {
-        modalCallback = function() {
-            modelEditor.markClean();
-            loadEx(descriptionFile,modelFile);
-        };
-        $('#modalConfirmClearAll').modal({show: true});
-    }
+function loadExample(modelFile) {
+  if (modelEditor.isClean()) {
+    $.get(modelFile).done(function(data) {
+      modelEditor.setValue(data);
+      modelEditor.markClean();
+      var str = re.exec(data)[0];
+      console.log(str.substring(2,str.length-2));
+      $('#instructionContent').html(marked(str.substring(2,str.length-2)));
+      renderMathInElement(document.getElementById("instructionContent"));
+      $('#modelFileName').html(modelFile);
+    });
+  } else {
+    $('#btnModalConfirmClearAll').click(function() {
+      modelEditor.markClean();
+      loadExample(modelFile);
+    });
+    $('#modalConfirmClearAll').modal({show: true});
+  }
 }
+
+
+function old_loadExample(descriptionFile,modelFile) {
+  if (modelEditor.isClean()) {
+    loadModel(modelFile);
+    loadDescription(descriptionFile);
+    fileEntry = null;
+  } else {
+    $('#btnModalConfirmClearAll').click(function() {
+      modelEditor.markClean();
+      loadExample(descriptionFile,modelFile);
+    });
+    $('#modalConfirmClearAll').modal({show: true});
+  }
+}
+
 
 function loadDescription(filename) {
     filename = filename || '';
@@ -130,13 +179,14 @@ function loadDescription(filename) {
             renderMathInElement(document.getElementById("instructionContent"));
         }).fail(function(){
             $('#instructionContent').empty();
-		});
+		  });
     }
 }
 
+
 // load model file into editor
 function loadModel(filename) {
-    filename = filename || '&nbsp;';
+    filename = filename || '';
     if (filename) {
         if (modelEditor.isClean()) {
            $.get(exampleDir + fileSep + filename, function(data) {
@@ -146,14 +196,16 @@ function loadModel(filename) {
                 clearOutput();
             });
         } else {
-            modalCallback = function() {
+            $('#btnModalConfirmClearAll').click(function() {
                modelEditor.markClean();
                loadModel(filename);
-            };
+            });
             $('#modalConfirmClearAll').modal({show: true});
         }
     }
 }
+
+
 
 /**********************************************************************
  utility functions
@@ -409,7 +461,7 @@ function saveModelAs() {
 
 function newModel() {
     if (modelEditor.isClean()) {
-        loadEx('_blank.html','untitled.mod');
+        loadExample('_blank.html','untitled.mod');
         clearData();
         fileEntry = null;
     } else {

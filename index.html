@@ -25,7 +25,6 @@
     #instructionContent {width: 100%;}
     #linkTextArea {height: 80px; width: 490px;}
     #content{ clear: left; width: 750; padding-top: 0px; padding-left: 15px; padding-right: 15px; }
-    #footer { float: left; padding-left: 20px;}
     #output { font-family: Consolas, Monaco, "Courier New", monospace; font-size: 13px; width: 100%; }
     #log { font-family: Consolas, Monaco, "Courier New", monospace; font-size: 13px; width: 100%; }
   </style>
@@ -57,6 +56,7 @@
       border: solid 1px;
     }
   </style>
+  <script src="libs/Marked/0.3.5/marked.min.js"></script>
   <link href="libs/KaTeX/0.5.1/katex.min.css" rel="stylesheet" >
   <script src="libs/KaTeX/0.5.1/katex.min.js"></script>
   <script src="libs/KaTeX/0.5.1/auto-render.min.js"></script>
@@ -333,7 +333,7 @@
     <div id='content' style="padding-top: 40px;">
 
       <!-- Instruction -->
-      <div id='instructionContent'></div>
+      <div id='instructionContent' style="padding-top: 40px;"></div>
       <br>
 
       <!-- Model Editor -->
