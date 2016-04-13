@@ -42,7 +42,7 @@ Stochastic Dynamic Programming" (Academic Press, 1983), an exact solution can
 be found by linear programming. We seek a stationary solution \\(V[x]\\) by 
 minimizing \\(\\sum\_{x \\in 0..N} V[x]\\)  subject to 
 
-\\[V[x] >= a (p V[x + u] + q V[x-u])\\]
+\\[V[x] \\geq a (p V[x + u] + q V[x-u])\\]
 
 for all feasible bets and all \\(x \\in 1..N-1\\) with boundary conditions \\(V[0] = 0\\) 
 and \\(V[N] = N\\).  The set of optimal wagers \\(u[x]\\) are found by determing the
