@@ -80,6 +80,13 @@ $('#menuOpen').click(openModel);
 $('#menuSave').click(saveModel);
 $('#menuSaveAs').click(saveModelAs);
 
+$(".example").click(function() {
+  openExample(exampleDir + fileSep + this.id + ".mod");
+});
+$(".example_glpk").click(function(){
+	openExample("../glpk-4.60/examples/" + this.id + ".mod");
+});
+
 $('#menuAbout').click(function () {
     $('#modalAbout').modal({show:true});
 });
@@ -98,113 +105,132 @@ $('#btnSolveModel').click(solve);
  load example files
 **********************************************************************/
 
+var md = markdownit();
+var fileEntry = [];
+var fileName = [];
 
+/* regex pattern to match an initial multiline comment */
+var re = /\s*\/\*+((.|[\r\n])*?)\*+\//;
 
-
-/*
-function loadDescription(filename) {
-  filename = filename || '';
-  filename = "aaa.mod";
-  if (filename) {
-  $.get(exampleDir + fileSep + filename).done(function(data) {
-            $('#instructionContent').html(data.match(re));
-            renderMathInElement(document.getElementById("instructionContent"));
-        }).fail(function(){
-            $('#instructionContent').empty();
-		  });
-    }
-
+function newModel() {
+  if (modelEditor.isClean()) {
+    fileEntry = null;
+    fileName = "untitled.mod";
+    $('#instructionContent').html('&nbsp;');
+    $('#modelFileName').html(fileName);    
+    modelEditor.setValue('');
+    modelEditor.markClean();
+    clearData();
+  } else {
+    $('#btnModalConfirmClearAll').click(function() {
+      modelEditor.markClean();
+      newModel();
+    });
+    $('#modalConfirmClearAll').modal({show: true});
+  }
 }
 
-*/
-
-/* $(".example").click(function(){
-	var id = this.id;
-	loadExample(id + ".html", id + ".mod");
-});
-
-$(".example_glpk").click(function(){
-	var id = this.id;
-	loadExample("glpk.html", "../glpk-4.60/examples/" + id + ".mod");
-});
-*/
-
-re = RegExp("/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*/");
-
-$(".example").click(function() {
-  loadExample(exampleDir + fileSep + this.id + ".mod");
-});
-
-function loadExample(modelFile) {
+function openExample(modelFile) {
   if (modelEditor.isClean()) {
     $.get(modelFile).done(function(data) {
+      fileName = modelFile;
+      $('#modelFileName').html(fileName);
       modelEditor.setValue(data);
       modelEditor.markClean();
-      var str = re.exec(data)[0];
-      console.log(str.substring(2,str.length-2));
-      $('#instructionContent').html(marked(str.substring(2,str.length-2)));
-      renderMathInElement(document.getElementById("instructionContent"));
-      $('#modelFileName').html(modelFile);
+      var str = re.exec(data);
+      if (str !== null) {
+        $('#instructionContent').html(md.render(str[1]));
+        renderMathInElement(document.getElementById("instructionContent"));
+      } else {
+        $('#instructionContent').html('&nbsp;');
+      }
     });
   } else {
     $('#btnModalConfirmClearAll').click(function() {
       modelEditor.markClean();
-      loadExample(modelFile);
+      openExample(modelFile);
     });
     $('#modalConfirmClearAll').modal({show: true});
   }
 }
 
-
-function old_loadExample(descriptionFile,modelFile) {
+function openModel () {
   if (modelEditor.isClean()) {
-    loadModel(modelFile);
-    loadDescription(descriptionFile);
-    fileEntry = null;
+    chrome.fileSystem.chooseEntry(
+      {type: 'openFile'},
+      function(fe) {
+        if (fe) {
+          fe.file(function(file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+              fileEntry = fe;
+              fileName = fe.name;
+              $('#modelFileName').html(fe.name);
+              var str = re.exec(e.target.result);
+              if (str !== null) {
+                $('#instructionContent').html(md.render(str[1]));
+                renderMathInElement(document.getElementById("instructionContent"));
+              } else {
+                $('#instructionContent').html('&nbsp;');
+              }
+              modelEditor.setValue(e.target.result);
+              modelEditor.markClean();
+              clearOutput();
+            };
+            reader.readAsText(file);
+          },
+          errorHandler
+        );
+      }
+    });
   } else {
     $('#btnModalConfirmClearAll').click(function() {
       modelEditor.markClean();
-      loadExample(descriptionFile,modelFile);
+      openModel();
     });
     $('#modalConfirmClearAll').modal({show: true});
   }
 }
 
-
-function loadDescription(filename) {
-    filename = filename || '';
-    if (filename) {
-        $.get(descriptionDir + fileSep + filename).done(function(data) {
-            $('#instructionContent').html(data);
-            renderMathInElement(document.getElementById("instructionContent"));
-        }).fail(function(){
-            $('#instructionContent').empty();
-		  });
-    }
-}
-
-
-// load model file into editor
-function loadModel(filename) {
-    filename = filename || '';
-    if (filename) {
-        if (modelEditor.isClean()) {
-           $.get(exampleDir + fileSep + filename, function(data) {
-                modelEditor.setValue(data);
-                modelEditor.markClean();
-                $('#modelFileName').html(filename);
-                clearOutput();
-            });
-        } else {
-            $('#btnModalConfirmClearAll').click(function() {
-               modelEditor.markClean();
-               loadModel(filename);
-            });
-            $('#modalConfirmClearAll').modal({show: true});
+function saveModel() {
+  displayInfo('Saving File');
+  if (fileEntry)
+    save();
+  else 
+    chrome.fileSystem.chooseEntry(
+      {type: 'saveFile'},
+      function(fe) {
+        if (fe) {
+          fileEntry = fe;
+          save();
         }
-    }
+      }
+    );
 }
 
+function saveModelAs() {
+  fileEntry = null;
+  saveModel();
+}
+
+function save () {
+  fileEntry.createWriter(
+    function(fileWriter) {
+      fileWriter.onerror = errorHandler;
+      fileWriter.onwrite = function(e) {
+        fileWriter.onwrite = function(e) {
+          displayInfo('Saved OK');
+          modelEditor.markClean();
+        };
+        var blob = new Blob([modelEditor.getValue()],
+          {type: 'text/plain'});
+        fileWriter.write(blob);
+      };
+      fileWriter.truncate(0);
+    },
+    errorHandler
+  );
+}
 
 
 /**********************************************************************
@@ -386,92 +412,6 @@ $('a[rel="external"]').click(function() {
     $(this).attr('target','_blank');
 });
 
-function openFileInEditor () {
-  chrome.fileSystem.chooseEntry(
-    {type: 'openFile'},
-      function(fe) {
-        if (fe) {
-          fileEntry = fe;
-          fe.file(function(file) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-              modelEditor.setValue(e.target.result);
-              modelEditor.markClean();
-              $('#modelFileName').html(fe.name);
-              clearOutput();
-              };
-             reader.readAsText(file);
-          },
-          errorHandler
-        );
-      }
-    }
-  );
-}
-
-function openModel () {
-  if (modelEditor.isClean()) {
-    openFileInEditor();
-  } else {
-    $('#btnModalConfirmClearAll').click(openFileInEditor);
-    $('#modalConfirmClearAll').modal({show: true});
-  }
-}
-
-
-function save () {
-  fileEntry.createWriter(
-    function(fileWriter) {
-      fileWriter.onerror = errorHandler;
-      fileWriter.onwrite = function(e) {
-        fileWriter.onwrite = function(e) {
-          displayInfo('Saved OK');
-          modelEditor.markClean();
-        };
-        var blob = new Blob([modelEditor.getValue()],
-          {type: 'text/plain'});
-        fileWriter.write(blob);
-      };
-      fileWriter.truncate(0);
-    },
-    errorHandler
-  );
-}
-
-function saveModel() {
-  displayInfo('Saving File');
-  if (fileEntry)
-    save();
-  else 
-    chrome.fileSystem.chooseEntry(
-      {type: 'saveFile'},
-      function(fe) {
-        if (fe) {
-          fileEntry = fe;
-          save();
-        }
-      }
-    );
-}
-
-function saveModelAs() {
-  fileEntry = null;
-  saveModel();
-}
-
-function newModel() {
-    if (modelEditor.isClean()) {
-        loadExample('_blank.html','untitled.mod');
-        clearData();
-        fileEntry = null;
-    } else {
-        $('#btnModalConfirmClearAll').click(function() {
-            modelEditor.markClean();
-            newModel();
-        });
-        $('#modalConfirmClearAll').modal({show: true});
-    }
-}
 
 function clearOutput() {
     clearMessage();
