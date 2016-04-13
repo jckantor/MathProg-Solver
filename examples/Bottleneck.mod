@@ -1,4 +1,11 @@
-/* Machine Bottleneck Example */
+/*
+
+# Machine Bottleneck
+
+The task is to schedule a set of jobs on a single machine given the release
+time, duration, and due time for each job.
+
+*/
 
 set JOBS;
 

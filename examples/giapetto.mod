@@ -1,7 +1,7 @@
 /* 
-## Giapetto's Workshop
+# Giapetto's Workshop
 
-Find the optimal solution maximizing Giapetto's profit
+Find the optimal solution maximizing Giapetto's profit.
 */
 
 # Decision variables
