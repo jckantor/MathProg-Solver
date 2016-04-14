@@ -12,11 +12,10 @@
  aircraft must start and finish at different locations (if needed,
  dummy locations with the same latitude and longitude can be 
  included in the list of locations).
+ */
 
- Jeffrey Kantor
- 
- March, 2013
-*/
+# Jeffrey Kantor
+# March, 2013
 
 # DATA SETS (IN THE DATA SECTION)
 

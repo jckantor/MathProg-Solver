@@ -1,4 +1,4 @@
-/* Piecewise Linear Interpolation
+/* # Piecewise Linear Interpolation
 
 A common requirement is to incorporate a nonlinear constraint or objective function
 into an MIP problem. Normally special ordered sets of type 2 (SOS2) are used to model

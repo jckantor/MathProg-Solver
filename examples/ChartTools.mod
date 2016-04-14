@@ -1,9 +1,9 @@
+/* # Chart Tools
 
-/* Chart Tools
- The table driver GCHART creates charts using Google Chart Tools. The chart
- options are specified using the MathProg table syntax 
+The table driver GCHART creates charts using Google Chart Tools. The chart
+options are specified using the MathProg table syntax 
  
-   table tname {x in X} OUT "GCHART" title chartType options : x~fld, y[x]~Y, ...
+      table tname {x in X} OUT "GCHART" title chartType options : x~fld, y[x]~Y, ...
  
  where 
  

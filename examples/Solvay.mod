@@ -1,4 +1,4 @@
-/* Generation-Consumption Analysis of the Solvay Process
+/* # Generation-Consumption Analysis of the Solvay Process
  
 The Solvay process was invented in the mid-nineteenth century for the production
 of soda ash (Sodium Carbonate) from sea salt (Sodium Chloride) and limestone 

@@ -1,8 +1,9 @@
-# Binomial Options Pricing Model
-#
-# Determines the price of a European call option for an asset in which the
-# price model is a binomial tree. The option price is the minimum value
-# of a portfolio that replicates the option payoff at expiration.
+/* # Binomial Options Pricing Model of a European Call Option
+
+Determines the price of a European call option for an asset in which the
+price model is a binomial tree. The option price is the minimum value
+of a portfolio that replicates the option payoff at expiration.
+*/
 
 # Asset Model
 param S0 := 100;         # initial price   

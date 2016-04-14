@@ -102,8 +102,8 @@ $('#btnSolveModel').click(solveModel);
 **********************************************************************/
 
 var md = markdownit();
-var fileEntry = [];
-var fileName = [];
+var fileEntry = null;
+var fileName = '';
 
 /* regex pattern to match an initial multiline comment */
 var re = /\s*\/\*+((.|[\r\n])*?)\*+\//;
@@ -129,6 +129,7 @@ function newModel() {
 function openExample(modelFile) {
   if (modelEditor.isClean()) {
     $.get(modelFile).done(function(data) {
+      fileEntry = null;
       fileName = modelFile;
       $('#modelFileName').html(fileName);
       modelEditor.setValue(data);
@@ -153,7 +154,10 @@ function openExample(modelFile) {
 function openModel () {
   if (modelEditor.isClean()) {
     chrome.fileSystem.chooseEntry(
-      {type: 'openFile'},
+      { type: 'openFile',
+        accepts:  [ { description: 'Model files (*.mod)',
+                      extensions : ['mod'] } ]
+      },
       function(fe) {
         if (fe) {
           fe.file(function(file) {
@@ -189,12 +193,15 @@ function openModel () {
 }
 
 function saveModel() {
-  displayInfo('Saving File');
-  if (fileEntry)
+  if (fileEntry !== null) {
     save();
-  else 
+  } else {
     chrome.fileSystem.chooseEntry(
-      {type: 'saveFile'},
+      { type: 'saveFile',
+        suggestedName: fileName,
+        accepts : [ { description: 'Model files (*.mod)',
+                      extensions : ['mod'] } ]
+      },
       function(fe) {
         if (fe) {
           fileEntry = fe;
@@ -203,6 +210,7 @@ function saveModel() {
         }
       }
     );
+  }
 }
 
 function saveModelAs() {
@@ -216,7 +224,7 @@ function save () {
       fileWriter.onerror = errorHandler;
       fileWriter.onwrite = function(e) {
         fileWriter.onwrite = function(e) {
-          displayInfo('Saved OK');
+          displayInfo('Saved: ' + fileEntry.name);
           $('#modelFileName').html(fileName);
           var str = re.exec(modelEditor.getValue());
           if (str !== null) {
@@ -334,9 +342,19 @@ function writeConstraintTable() {
  functions to manage the display message
 **********************************************************************/
 
+var displayTimeoutID;
+
 function displayInfo (value) {
   clearMessage();
   $('#message').addClass('alert-info').html(value).css('visibility','visible').show();
+  if (displayTimeoutID) {
+    clearTimeout(displayTimeoutID);
+  }
+  displayTimeoutID = setTimeout( function() {
+    $('#message').removeClass('alert-info').html('&nbsp;').css('visibility','hidden').show();
+    },
+    3000
+  );
 }
 
 function displaySuccess (value) {
@@ -432,7 +450,6 @@ function clearData() {
   fileCount = 0;
   ds = [];
 }
-
 
 // LP/LP+MIP radio buttons
 function isMIP () {
@@ -843,7 +860,6 @@ function loadJSON(arg,callback) {
 
 function solveModel() {
   try {
-    saveModel();
     solve();
   } catch (err) {
     if (err instanceof MathProgError) {
