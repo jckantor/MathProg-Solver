@@ -6,10 +6,9 @@ how to solve to small system of linear equations.
 
 Consider a set of three linear equations
 
-\\[ 2x + y + z = & 12 \\]
-
-x + 2y + z = & 23 \\
-x + y + z = & 10 
+\\[ 2x + y + z = 12\\]
+\\[ x + 2y + z = 23 \\]
+\\[ x + y + z = 10 \\]
 
 in the three unknowns \\(x\\), \\(y\\), and \\(z\\).
 

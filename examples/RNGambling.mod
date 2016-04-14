@@ -9,7 +9,7 @@ Given a stake \\(x\\) and wager \\(u\\), the result is a stake that is either
 \\(x+u\\) with probability \\(p\\), or a stake \\(x-u\\) with probability \\(q\\).
 The probabilities sastisfy the inequality
 
-\\[(p + q \leq 1\\]
+\\[p + q \leq 1\\]
 
 The wager must be smaller than the stake or any maximum wager established for 
 the game.  To encourage risk taking, the future value of money is discounted 
@@ -27,7 +27,7 @@ stake \\(x\\). If the gambler reaches the goal of winning a stake \\(N\\) at
 loses everything, then \\(V(k,0) = 0\\). Otherwise, for \\(x < N\\), the
 Bellman equation for optimality provides the recursion
 
-\\[V(k-1,x) = a \max\_u  [ p V(k,x+u) + q V(k,x-u) ]\\]
+\\[V(k-1,x) = a \max_u  [ p V(k,x+u) + q V(k,x-u) ]\\]
 
 where \\(a\\) is the discount factor for future values. The maximization is
 over the set of possible bets ranging from \\(0\\) to the minimum of \\(x\\),
@@ -40,9 +40,9 @@ The optimality equation can be solved by well known methods for policy
 iteration.  Alternatively, as shown for example by Ross in "Introduction to 
 Stochastic Dynamic Programming" (Academic Press, 1983), an exact solution can 
 be found by linear programming. We seek a stationary solution \\(V[x]\\) by 
-minimizing \\(\\sum\_{x \\in 0..N} V[x]\\)  subject to 
+minimizing \\(\sum_{x \in 0..N} V[x]\\)  subject to 
 
-\\[V[x] \\geq a (p V[x + u] + q V[x-u])\\]
+\\[V[x] \geq a (p V[x + u] + q V[x-u])\\]
 
 for all feasible bets and all \\(x \\in 1..N-1\\) with boundary conditions \\(V[0] = 0\\) 
 and \\(V[N] = N\\).  The set of optimal wagers \\(u[x]\\) are found by determing the

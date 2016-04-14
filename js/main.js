@@ -116,7 +116,7 @@ function newModel() {
     $('#modelFileName').html(fileName);    
     modelEditor.setValue('');
     modelEditor.markClean();
-    clearData();
+    clearOutput();
   } else {
     $('#btnModalConfirmClearAll').click(function() {
       modelEditor.markClean();
@@ -141,6 +141,7 @@ function openExample(modelFile) {
       } else {
         $('#instructionContent').html('&nbsp;');
       }
+      clearOutput();
     });
   } else {
     $('#btnModalConfirmClearAll').click(function() {
@@ -168,8 +169,9 @@ function openModel () {
               $('#modelFileName').html(fe.name);
               var str = re.exec(e.target.result);
               if (str !== null) {
-                $('#instructionContent').html(md.render(str[1]));
+                $('#instructionContent').html(str[1]);
                 renderMathInElement(document.getElementById("instructionContent"));
+/*                $('#instructionContent').html(md.render(str[1])); */
               } else {
                 $('#instructionContent').html('&nbsp;');
               }
