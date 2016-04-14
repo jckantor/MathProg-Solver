@@ -92,10 +92,22 @@ $('#btnOpenModel').tooltip();
 $('#btnSaveModel').tooltip();
 $('#btnSolveModel').tooltip();
 
-$('#btnNewModel').click(newModel);
-$('#btnOpenModel').click(openModel);
-$('#btnSaveModel').click(saveModel);
-$('#btnSolveModel').click(solveModel);
+$('#btnNewModel').click( function() {
+  newModel();
+  this.blur();
+});
+$('#btnOpenModel').click( function() {
+  openModel();
+  this.blur();
+});
+$('#btnSaveModel').click( function() {
+  saveModel();
+  this.blur();
+});
+$('#btnSolveModel').click( function() {
+  solveModel();
+  this.blur();
+});
 
 /**********************************************************************
  load example files
