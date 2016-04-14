@@ -1,8 +1,9 @@
-# Binomial Options Pricing Model
-#
-# Determines the price of an American call option using a binomial option
-# pricing model. The option price is the minimum value of a portfolio
-# that replicates the option payoff at expiration or at early exercise.
+/* # Binomial Options Pricing Model for an American Call
+
+Determines the price of an American call option using a binomial option
+pricing model. The option price is the minimum value of a portfolio
+that replicates the option payoff at expiration or at early exercise.
+*/
 
 # Asset Model
 param S0 := 100;         # initial price   

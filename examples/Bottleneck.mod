@@ -1,9 +1,17 @@
-/*
-
-# Machine Bottleneck
+/* # Machine Bottleneck
 
 The task is to schedule a set of jobs on a single machine given the release
-time, duration, and due time for each job.
+time, duration, and due time for each job. 
+
+| JOBS | Release | Dur. | Due |
+| :--: | :-----: | :--: | :-: |
+| A | 2 | 5 | 10 |
+| B | 5 | 6 | 21 |
+| C | 4 | 8 | 15 |
+| D | 0 | 4 | 10 |
+| E | 0 | 2 |  5 |
+| F | 8 | 3 | 15 |
+| G | 9 | 2 | 22 |
 
 */
 

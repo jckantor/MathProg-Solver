@@ -1,4 +1,4 @@
-# Example: GiapettoExpansion.mod
+/* # Expansion of Giapetto's Workshop */
 
 # Decision variables
 var x1 >=0 integer;  # soldier
