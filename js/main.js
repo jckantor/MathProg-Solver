@@ -1,9 +1,6 @@
 /* main.js loads at end of mathprog.html */
 
 console.log('Loading main.js');
-
-/* fix browser compatability issues */
-
 $(document).ready(newModel);
 
 // Global Variables

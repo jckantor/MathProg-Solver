@@ -4,8 +4,8 @@ Applications of optimization in finance and other fields often require
 sampling of a multivariate normal distribution. We demonstrate a simple
 technique for generating samples in GMPL. 
 
-The data section defines an index set I, population mean Mu{I},
-and population covariance Sigma{I,I}.  Optionally the data section can
+The data section defines an index set \\(I\\), population mean \\(\mu\{I\}\\),
+and population covariance \\(\Sigma\{I,I\}\\).  Optionally the data section can
 specify the number of samples to use in verifying the distribution.
 */
 

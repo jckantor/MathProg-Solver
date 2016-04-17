@@ -1,5 +1,4 @@
-/*
-# Data Reconciliation and Gross Error Detection
+/* # Data Reconciliation and Gross Error Detection
 
 The following demonstration was motivated by a former student Matt N. 
 who was exploring methods for assessing measurement information in a
@@ -8,28 +7,26 @@ refinery application. The illustration was adapted from Chapter 1 of
 Data" by Shankar Narasimhan and Cornelius Jordache (Gulf Publishing,
 2000).
 
-           1/1          2/2         4/3         6/5
-        -------- SPLIT ----- HTEXG ----- MIXER --------
-                   |                       ^ 
-                   |                       |
-                   |    3            5/4   |
-                   +-------> VALVE --------+
+                   1/1          2/2         4/3         6/5
+                -------- SPLIT ----- HTEXG ----- MIXER --------
+                           |                       ^ 
+                           |                       |
+                           |    3            5/4   |
+                           +-------> VALVE --------+
 
-The flow sheet is labeled by s/k pairs which refer to stream s and 
-measurement k. Streams are numbered s in 1..S and sensors are numbered 
-k in 1..K. The parameter s[k] denotes the stream associated with 
-measurement k.
+The flow sheet is labeled by \\(s/k\\) pairs which refer to stream \\(s\\) and 
+measurement \\(k\\). Streams are numbered \\(s\\) in \\(1..S\\) and sensors are numbered 
+\\(k\\) in \\(1..K\\). The parameter \\(s[k]\\) denotes the stream associated with 
+measurement \\(k\\).
 
-Given sensor measurements \(y_k\), the task is to infer values for the
-flowrates \(x_{s_k}\) using mass balance equations and a sensor model
+Given sensor measurements \\(y_k\\), the task is to infer values for the
+flowrates \\(x_{s_k}\\) using mass balance equations and a sensor model
 
-\[\begin{eqnarray}
-  |y_k-x_{s_k}| & \leq & e_k + M g_k \\
-  |e_k| & \leq & e^{max}_k
-\end{eqnarray}\]
+\\[ \|y_k-x_{s_k}| \leq e_k + M g_k \\]
+\\[ |e_k| \leq e^{max}_k \\]
 
-\(g_k\) is a binary variable indicating the presence of a gross error 
-in sensor \(k\). \(M\) is a big number. A gross error occurs if the 
+\\(g_k\\) is a binary variable indicating the presence of a gross error 
+in sensor \\(k\\). \\(M\\) is a big number. A gross error occurs if the 
 measured data is not consistent with sensor model and mass balances. 
 The optimization objective is to find an estimate of mass flows 
 minimizing the number of gross sensor errors.
