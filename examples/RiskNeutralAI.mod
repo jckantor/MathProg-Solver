@@ -8,6 +8,8 @@ attracted the attention of third-party agents who offered an opportunity to bet 
 eventual winner. Here we analyze a sample of the betting market from Season 12 of the 
 show prior to the episode featureing the final nine singers.
 
+## Model for Maximum Risk Free Return
+
 A betting agent will quote the payout for a wager on a particular contestant. Label the 
 agent \\(a\\), the contestant \\(c\\), and the amount wagered as \\(P_{c,a}(0)\\) 
 (typically $100). Let \\(n_{c,a}\\) denote the number of bets an investor places on 
@@ -49,6 +51,8 @@ At this stage we have a set of linear inequalities in the non-negative variables
 rate \\(r_f\\), we can try to compute a solution that provides a return higher than the 
 risk-free rate. If such a solution exists then there exists an arbitrage opportunity.
 
+## Farka's Lemma
+
 Arbitrages, however, are rare. When they arise it is likely investors will exploit the 
 situation thereby driving the market back to a new price/demand equilibrium. So rather 
 than seek solutions to a problem where a solution isn't likely to exist, we change the 
@@ -71,16 +75,23 @@ not both. Applying this result, an arbitrage does not exist if there are variabl
 
 \\[p_{c,a}y_c - (1 + r_f)\sum_{c \in C}y_c \leq 0 \qquad \forall a \in A, \forall c \in C\\]
 
+## Solution for Maximum Risk-Free Return
+
 It's easy to see that if \\(r_f\\) is large enough, then an aribitrage can't exist.  The
 smallest value for which an arbitrage does not exist (therefore an upper bound on the
 attainable risk-free return obtained by any betting strategy) is given by 
 
-\\[\min_{y_c} r_f\\]
+\\[\min_{y_c \geq 0} r_f\\]
 
 subject to
 
 \\[p_{c,a}y_c \leq  (1 + r_f) \qquad \forall a \in A, \forall c \in C\\]
 \\[\sum_{c \in C}y_c = 1\\]
+
+The parameters \\(y_c\\) can be interpreted as a risk-neutral probability for 
+contestant \\(c\\) to win the competition. The actual order of finish is listed
+below for contestants in Season 12 of _American Idol_, so you can see how well this
+works.
 */
 
 set AGENTS;
