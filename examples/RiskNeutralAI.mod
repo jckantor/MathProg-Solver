@@ -1,132 +1,141 @@
-/* # Risk Neutral Analysis for American Idol
+/* # Risk Neutral Analysis for _American Idol_
 
-American Idol is a U.S. based televised singing competition in
-    which the audience votes for their favorite contestant in the
-    final rounds. Each week the contestant with the lowest votes
-    is dropped until a winner emerges in the last week. The 
-    intense interest in the singing competition has attracted
-    the attention of third-party agents who offer an opportunity
-    to bet on the eventual winner. Here we analyze a sample of the
-    betting market to show just how bad an 'investment' it can be.
+_American Idol_ was a singing competition televised in the United States from 2002 to 
+2016 in which the television audience voted for their favorite contestant in the final 
+rounds. Each week the contestant with the lowest number of votes was dropped until a 
+winner emerged in the final episode. The intense interest in  the singing competition 
+attracted the attention of third-party agents who offered an opportunity to bet on the 
+eventual winner. Here we analyze a sample of the betting market from Season 12 of the 
+show prior to the episode featureing the final nine singers.
 
-A typical betting agent will quote the payout for a $100
-    on a particular contestant. Label the agent \(a\), the contestant
-    \(c\), and the face value of the corresponding bet \(P_{c,a}(0)\) 
-    (in this case $100). Let \(x_{c,a}\) denote the number of bets an
-    investor places on contestant \(c\) with agent \(a\). The total
-    cost to the investor is then
-    \[w(0)=\sum_{c\in\cal{C}}\sum_{a\in\cal{A}}P_{c,a}(0)x_{c,a}\]
-    The payout of a bet with agent \(a\) at the end of the contest is
-    \(P_{c,a}(1)\) if contestant \(c\) wins, otherwise the payout is 
-    zero. 
-
-A risk neutral investor seeks a betting strategy offering a
-    risk-free return under all outcomes, that is
-    \[\sum_{a\in\cal{A}}P_{c,a}(1)x_{c,a} \geq (1+r_f)w(0) \qquad 
-    \forall c\in\cal{C} \]
-    where \(r_f\) is the risk free return. Later we'll see that
-    betting agents prefer to keep profits to themselves, and that
-    the maximum value for \(r_f\) is generally negative. That will
-    be the unavoidable cost of participating in the betting markets.
-
-Substitution yields
-    \[(1+r_f)\sum_{c\in\cal{C}}\sum_{a\in\cal{A}}P_{c,a}(0)x_{c,a} 
-    - \sum_{a\in\cal{A}}P_{c,a}(1)x_{c,a} \leq 0 \qquad \forall 
-    c\in\cal{C}\]
-    Gordan's theorem (a version of Farka's lemma) tells us either
-    \(Ax < 0\) has a solution \(x\) or else \(y^TA = 0\) has a solution
-    \(y\geq 0\). 
-
-We introduce variables \(y_c \geq 0\) such that
-    \[(1+r_f)\]\sum_{c\in\cal{C}}
+A betting agent will quote the payout for a wager on a particular contestant. Label the 
+agent \\(a\\), the contestant \\(c\\), and the amount wagered as \\(P_{c,a}(0)\\) 
+(typically $100). Let \\(n_{c,a}\\) denote the number of bets an investor places on 
+contestant \\(c\\) with agent \\(a\\). We assume the agents will only accept non-negative 
+wagers (i.e., no 'shorting') so that \\(n_{c,x} \geq 0\\). The total cost to the investor 
+is
     
-    <h3>Risk Neutral Analysis for American Idol</h3>
-<p>
-    American Idol is a U.S. based televised singing competition in
-    which the audience votes for their favorite contestant in the
-    final rounds. Each week the contestant with the lowest votes
-    is dropped until a winner emerges in the last week. The 
-    intense interest in the singing competition has attracted
-    the attention of third-party agents who offer an opportunity
-    to bet on the eventual winner. Here we analyze a sample of the
-    betting market to show just how bad an 'investment' it can be.
-</p>
-<p>
-    A typical betting agent will quote the payout for a $100
-    on a particular contestant. Label the agent \(a\), the contestant
-    \(c\), and the face value of the corresponding bet \(P_{c,a}(0)\) 
-    (in this case $100). Let \(x_{c,a}\) denote the number of bets an
-    investor places on contestant \(c\) with agent \(a\). The total
-    cost to the investor is then
-    \[w(0)=\sum_{c\in\cal{C}}\sum_{a\in\cal{A}}P_{c,a}(0)x_{c,a}\]
-    The payout of a bet with agent \(a\) at the end of the contest is
-    \(P_{c,a}(1)\) if contestant \(c\) wins, otherwise the payout is 
-    zero. 
-</p>
-<p>
-    A risk neutral investor seeks a betting strategy offering a
-    risk-free return under all outcomes, that is
-    \[\sum_{a\in\cal{A}}P_{c,a}(1)x_{c,a} \geq (1+r_f)w(0) \qquad 
-    \forall c\in\cal{C} \]
-    where \(r_f\) is the risk free return. Later we'll see that
-    betting agents prefer to keep profits to themselves, and that
-    the maximum value for \(r_f\) is generally negative. That will
-    be the unavoidable cost of participating in the betting markets.
-</p>
-<p>
-    Substitution yields
-    \[(1+r_f)\sum_{c\in\cal{C}}\sum_{a\in\cal{A}}P_{c,a}(0)x_{c,a} 
-    - \sum_{a\in\cal{A}}P_{c,a}(1)x_{c,a} \leq 0 \qquad \forall 
-    c\in\cal{C}\]
-    Gordan's theorem (a version of Farka's lemma) tells us either
-    \(Ax < 0\) has a solution \(x\) or else \(y^TA = 0\) has a solution
-    \(y\geq 0\). 
+\\[w(0)=\sum_{c\in C}\sum_{a\in A}P_{c,a}(0)n_{c,a}\\]
+
+If contestant \\(c\\) eventually wins, the payout quoted by agent \\(a\\) is
+\\(P_{c,a}(1)\\), otherwise the payout is zero. If contestant \\(c\\) wins then the 
+payoff from all agents is
+
+\\[\sum_{a \in A} P_{c,a}(1) n_{c,a}\\]
+
+A risk neutral investor seeks a betting strategy offering a risk-free regardless of which 
+contestant wins. For every contestant
+
+\\[\sum_{a\in A} P_{c,a}(1)n_{c,a} > (1+r_f)w(0) \qquad \forall c\in C \\]
+
+where \\(r_f\\) is the risk-free return. After substitution
+
+\\[\sum_{a\in A} P_{c,a}(1)n_{c,a} > (1+r_f)\sum_{c\in C}\sum_{a\in A}P_{c,a}(0)n_{c,a} 
+  \qquad \forall c\in C \\]
+
+The notation is simplified by introducing a variable \\(x_{c,a} = P_{c,a}(0)n_{c,a}\\) 
+equal to the value of the wager placed on contestant \\(c\\) with agent \\(a\\). Then  
+defining the total relative return for a wager on contestant \\(c\\).
+
+\\[p_{c,a} = \frac{P_{c,a}(1)}{P_{c,a}(0)}\\]
+
+leaves an inequality for each contestant that reads
+
+\\[\sum_{a \in A} p_{c,a} x_{c,a} - (1 + r_f)\sum_{c\in C}\sum_{a\in A} x_{c,a} > 0 
+  \qquad \forall c\in C\\]
+   
+At this stage we have a set of linear inequalities in the non-negative variables \\
+(x_{c,a}\\). Given data on payoffs, the total amount of money to wager, and a risk-free 
+rate \\(r_f\\), we can try to compute a solution that provides a return higher than the 
+risk-free rate. If such a solution exists then there exists an arbitrage opportunity.
+
+Arbitrages, however, are rare. When they arise it is likely investors will exploit the 
+situation thereby driving the market back to a new price/demand equilibrium. So rather 
+than seek solutions to a problem where a solution isn't likely to exist, we change the 
+formulation using a version of Farka's lemma. 
+
+Consider two sets of linear inequalities, the first written
+
+\\[A \gg 0\\]
+\\[x \geq 0 \\]
+
+where the matrix/vector notation \\(A \gg 0\\) means a strict inequality between 
+corresponding elements of vector quantities, and the second written as
+
+\\[ A^Ty \leq 0 \\]
+\\[ y \geq 0\\]
+
+Farka's lemma states that one or the other of these two sets has a feasible solution, but 
+not both. Applying this result, an arbitrage does not exist if there are variables 
+\\(y_c \geq 0\\) such that
+
+\\[p_{c,a}y_c - (1 + r_f)\sum_{c \in C}y_c \leq 0 \qquad \forall a \in A, \forall c \in C\\]
+
+It's easy to see that if \\(r_f\\) is large enough, then an aribitrage can't exist.  The
+smallest value for which an arbitrage does not exist (therefore an upper bound on the
+attainable risk-free return obtained by any betting strategy) is given by 
+
+\\[\min_{y_c} r_f\\]
+
+subject to
+
+\\[p_{c,a}y_c \leq  (1 + r_f) \qquad \forall a \in A, \forall c \in C\\]
+\\[\sum_{c \in C}y_c = 1\\]
 */
 
 set AGENTS;
 set CONTESTANTS;
 param payout{CONTESTANTS,AGENTS};
+param finish{CONTESTANTS};
 
 var x{CONTESTANTS,AGENTS} >= 0;
 var y{CONTESTANTS} >= 0;
 var rf;
 
-s.t. prob : sum{c in CONTESTANTS} y[c] = 1;
-s.t. noarb {c in CONTESTANTS, a in AGENTS} : (1+rf)*100 <= payout[c,a]*y[c];
+s.t. total: sum{c in CONTESTANTS, a in AGENTS} x[c,a] = 1;
+s.t. return {c in CONTESTANTS} : sum{a in AGENTS} payout[c,a]*x[c,a] >= 100*(1 + rf);
 
-maximize obj: rf;
+s.t. prob : sum{c in CONTESTANTS} y[c] = 1;
+s.t. noarb {c in CONTESTANTS, a in AGENTS} : (1+rf)*100 >= payout[c,a]*y[c];
+
+minimize obj: rf;
 
 solve;
 
-table tout {c in CONTESTANTS} OUT "GCHART" "Amounts" "Table" : 
-    c~Contestent,
-    y[c]~Probability;
-    
-table tout {c in CONTESTANTS} OUT "GCHART" "Amounts" "PieChart" :   c~Contestant,
-    y[c]~Probability;
+printf "Maximum risk-free return = %7.4f\n\n", rf;
 
+printf "%15s      %6s", "CONTESTANT", "y[c]";
+printf {a in AGENTS} : "%14s", a;
+printf "\n";
 
+for {c in CONTESTANTS} {
+	printf "%15s(%1d)   %6.3f",c, finish[c], y[c];
+	printf {a in AGENTS} : "        %6.2f", 100*x[c,a];
+    printf "\n";
+}
+printf "%15s      %6s", "TOTALS", " ";
+for {a in AGENTS} : printf "        %6.2f", sum{c in CONTESTANTS} 100*x[c,a];
 data;
 
 set AGENTS := 
 Diamond  
-SportsbettingOnline  
+SportsBetting
 Bovada
 ;
 
-set CONTESTANTS := 
-'Candice Glover'
-'Angela Miller'
-'Kree Harrison'
-'Janelle Arthur'
-'Lazaro Arbos'
-'Amber Holcomb'
-'Paul Jolley'
-'Burnell Taylor'
-'Devin Velez'
+param : CONTESTANTS : finish := 
+'Candice Glover'    1
+'Angela Miller'     3
+'Kree Harrison'     2
+'Amber Holcomb'     4
+'Janelle Arthur'    5
+'Lazaro Arbos'      6
+'Burnell Taylor'    7
+'Devin Velez'       8
+'Paul Jolley'       9
 ;
 
-param payout :   Diamond  SportsbettingOnline  Bovada :=
+param payout :   Diamond  SportsBetting  Bovada :=
 'Candice Glover'     115      190      200
 'Angela Miller'      125      180      225
 'Kree Harrison'      230      180      275
