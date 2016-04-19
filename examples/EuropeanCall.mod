@@ -1,4 +1,4 @@
-/* # Binomial Options Pricing Model of a European Call Option
+/* # Binomial Pricing Model for a European Call Option
 
 Determines the price of a European call option for an asset in which the
 price model is a binomial tree. The option price is the minimum value

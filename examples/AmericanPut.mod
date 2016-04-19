@@ -1,4 +1,4 @@
-/* # Binomial Options Pricing Model for an American Put
+/* # Binomial Pricing Model for an American Put Option
 
 Determines the price of an American put option for an asset in which the
 price model is a binomial tree. The option price is the minimum value

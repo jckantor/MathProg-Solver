@@ -1,9 +1,11 @@
-# Binomial Options Pricing Model
-#
-# Determines the price of an European put option for an asset in which the
-# price model is a binomial tree. The option price is the minimum value
-# of a portfolio that replicates the option payoff at expiration, and can
-# payoff the early exercise of the option. (Data is from Hull, Sec 11.7).
+/* # Binomial Pricing Model for a European Put Option
+
+Determines the price of an European put option for an asset in which the
+price model is a binomial tree. The option price is the minimum value
+of a portfolio that replicates the option payoff at expiration, and can
+payoff the early exercise of the option. (Data is from Hull, Sec 11.7).
+
+*/
 
 # Asset Model
 param S0 := 50;          # initial price   

@@ -1,4 +1,4 @@
-/* # Binomial Options Pricing Model for an American Call
+/* # Binomial Pricing Model for an American Call Option
 
 Determines the price of an American call option using a binomial option
 pricing model. The option price is the minimum value of a portfolio
