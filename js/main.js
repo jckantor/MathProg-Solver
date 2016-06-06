@@ -117,6 +117,9 @@ var fileName = '';
 /* regex pattern to match an initial multiline comment */
 var re = /\s*\/\*+((.|[\r\n])*?)\*+\//;
 
+/**
+ * Resets state for start a new MathProg model
+ */
 function newModel() {
   if (modelEditor.isClean()) {
     fileEntry = null;
@@ -135,6 +138,9 @@ function newModel() {
   }
 }
 
+/**
+ * Open model from the Examples menu
+ */
 function openExample(modelFile) {
   if (modelEditor.isClean()) {
     $.get(modelFile).done(function(data) {
@@ -161,6 +167,9 @@ function openExample(modelFile) {
   }
 }
 
+/**
+ * Open a model from the external file system
+ */
 function openModel () {
   if (modelEditor.isClean()) {
     chrome.fileSystem.chooseEntry(
@@ -203,6 +212,9 @@ function openModel () {
   }
 }
 
+/**
+ * Save model to external filesystem
+ */
 function saveModel() {
   if (fileEntry !== null) {
     save();
@@ -223,6 +235,7 @@ function saveModel() {
     );
   }
 }
+
 
 function saveModelAs() {
   fileEntry = null;
@@ -260,7 +273,9 @@ function save () {
  utility functions
 **********************************************************************/
 
-// round number to a specified significant digits
+/**
+ * round number to a specified significant digits
+ */
 function formatNumber(num,sig){
   if (isNaN(parseFloat(num)) || !isFinite(num)) {return num;}
   if (Math.abs(num) <= Number.MIN_VALUE) {return '0';}
@@ -271,6 +286,9 @@ function formatNumber(num,sig){
   return num.toPrecision(sig).toString();
 }
 
+/**
+ * Handle errors from fileSystem calls
+ */
 function errorHandler(e) {
   console.dir(e);
   var msg;
@@ -834,7 +852,6 @@ function loadCSV(filename) {
   return jqxhr;
 }
 
-
 function loadJSON(arg,callback) {
   var filename = arg[2];
   var key = arg[3];
@@ -903,7 +920,6 @@ function solveModel() {
     return null;
   }
 }
-
 
 function solve() {
   tic = Date.now();
